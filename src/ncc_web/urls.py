@@ -18,19 +18,17 @@ from django.urls import path, include
 
 urlpatterns = [
     path("admin/", admin.site.urls),
-    path("writeups/", include('writeups.urls'))
+    path("writeups/", include("writeups.urls")),
+    path("tinymce/", include("tinymce.urls")),
 ]
 
 # Redirect root to writeups/ (for now)
 from django.views.generic import RedirectView
 
-urlpatterns += [
-    path('', RedirectView.as_view(url='writeups/', permanent=True)),
-]
+urlpatterns += [path("", RedirectView.as_view(url="writeups/", permanent=True))]
 
 # Serve static files during development
 from django.conf import settings
 from django.conf.urls.static import static
 
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
-
