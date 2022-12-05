@@ -76,10 +76,12 @@ class Post(models.Model):
     tags = models.ManyToManyField(
         "Tag",
         related_name = "posts", # use post.tags.all(), for example
+        blank=True, 
     )
     tools = models.ManyToManyField(
         "Tool",
         related_name = "posts",
+        blank=True,
     )
 
     def get_absolute_url(self):
@@ -104,7 +106,7 @@ class Post(models.Model):
 
 class Member(models.Model):
     # https://docs.djangoproject.com/en/dev/topics/auth/customizing/#extending-the-existing-user-model
-    # The username, first_name, last_name, and groups fields are accessible directly.
+    # The username, first_name, last_name, and groups fields are accessible through the .user attribute.
     user = models.OneToOneField(
         User,
         on_delete=models.CASCADE,
@@ -113,18 +115,20 @@ class Member(models.Model):
     display_name = models.CharField(
         verbose_name = "Display name",
         help_text = "Display name used in your URL and in post authoring (if necessary). 35 characters max.",
-        max_length=35
+        max_length=35,
+        unique=True,
     )
 
     use_display_name_in_posts = models.BooleanField(
         verbose_name = "Use display name in posts",
         help_text = "Whether to use the display name or your full name as the post author.",
-        unique=True,
     )
 
     content = tinymce_models.HTMLField(
         verbose_name = "Profile content",
-        help_text="A TinyMCE-driven field for the post content.",
+        help_text="A TinyMCE-driven field for the profile content.",
+        blank=True,
+        null=True,
     )
 
     meta_lead = models.CharField(
@@ -137,6 +141,8 @@ class Member(models.Model):
         verbose_name="Discord tag",
         help_text="Discord tag (with discriminator).",
         max_length=50,
+        blank=True,
+        null=True,
     )
 
     def get_absolute_url(self):
@@ -149,7 +155,10 @@ class Member(models.Model):
         return reverse('member', args=[str(self.display_name)])
 
     def __str__(self):
-        return self.user.name
+        if self.user.get_full_name():
+            return f"{self.user.get_full_name()} ({self.display_name})"
+        else:
+            return f"<no name> ({self.display_name})"
 
 class Competition(models.Model):
     # Order by start date, newest to oldest.
@@ -194,8 +203,8 @@ class Competition(models.Model):
         max_length=150,
     )
     content = tinymce_models.HTMLField(
-        verbose_name="Profile content",
-        help_text="A TinyMCE-driven field for the post content.",
+        verbose_name="Page content",
+        help_text="A TinyMCE-driven field for the post content/body copy.",
     )
     def get_absolute_url(self):
         """
@@ -247,7 +256,7 @@ class Placement(models.Model):
         """
         String representing placement.
         """
-        return f"{self.member.get_full_name()} - rank {self.rank} in {self.competition}"
+        return f"{self.member.user.get_full_name()} - rank {self.rank} in {self.competition}"
 
 class Tool(models.Model):
     id = models.AutoField(primary_key=True)
@@ -257,7 +266,7 @@ class Tool(models.Model):
         max_length=50,
     )
     content = tinymce_models.HTMLField(
-        verbose_name="Profile content",
+        verbose_name="Page content",
         help_text="A TinyMCE-driven field for the tool's page content.",
     )
     meta_lead = models.CharField(
@@ -291,6 +300,14 @@ class Tag(models.Model):
         help_text="The name used for this tag. 20 characters max.",
         primary_key=True,
         max_length=20,
+    )
+    hex_validation = RegexValidator(r'^[0-9a-fA-F]*$', 'Only valid hex characters allowed.')
+    length_validation = MinLengthValidator(6, message="Hex values must be exactly 6 in length.")
+    theme_color = models.CharField(
+        max_length=6,
+        help_text="The background color used for this competition. Enter as 6 hex characters. Please make sure there's sufficient contrast!",
+        validators=[hex_validation, length_validation],
+        default="002E62", # Navy blue used throughout the website
     )
 
     def get_absolute_url(self):
