@@ -119,6 +119,14 @@ class Member(models.Model):
         unique=True,
     )
 
+    title = models.CharField(
+        verbose_name = "Title",
+        help_text = "Special title (e.g. President, Vice President, etc.).",
+        max_length=35,
+        blank=True,
+        null=True,
+    )
+
     use_display_name_in_posts = models.BooleanField(
         verbose_name = "Use display name in posts",
         help_text = "Whether to use the display name or your full name as the post author.",
