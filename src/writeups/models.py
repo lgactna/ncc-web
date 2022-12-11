@@ -199,6 +199,19 @@ class Competition(models.Model):
         null=True,
     )
 
+    COMPETITION_TYPE = (
+        ('i', 'Individual'),
+        ('t', 'Team'),
+    )
+
+    type = models.CharField(
+        help_text='Competition type (individual/team/etc.)',
+        max_length=1,
+        choices=COMPETITION_TYPE,
+        blank=True,
+        default='i',
+    )
+
     hex_validation = RegexValidator(r'^[0-9a-fA-F]*$', 'Only valid hex characters allowed.')
     length_validation = MinLengthValidator(6, message="Hex values must be exactly 6 in length.")
     theme_color = models.CharField(
