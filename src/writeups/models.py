@@ -34,6 +34,7 @@ class Post(models.Model):
         help_text="The vanity URL (writeups/...) - if empty, uses the numerical post ID. Use dashes to separate words.",
         blank=True,
         null=True,
+        unique=True,
     )
     meta_lead = models.CharField(
         verbose_name = "Meta lead text",
@@ -75,7 +76,7 @@ class Post(models.Model):
     )
     tags = models.ManyToManyField(
         "Tag",
-        related_name = "posts", # use post.tags.all(), for example
+        related_name = "posts", # use tags.posts.all(), for example
         blank=True, 
     )
     tools = models.ManyToManyField(
@@ -183,6 +184,7 @@ class Competition(models.Model):
         help_text="The vanity URL (competition/...) - if empty, uses the numerical ID. Use dashes to separate words.",
         blank=True,
         null=True,
+        unique=True,
     )
     start_date = models.DateField(
         verbose_name="Start date",
@@ -291,6 +293,7 @@ class Tool(models.Model):
         help_text="The vanity URL (tool/...) - if empty, uses the numerical ID. Use dashes to separate words.",
         blank=True,
         null=True,
+        unique=True,
     )
 
     def get_absolute_url(self):
