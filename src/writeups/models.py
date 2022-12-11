@@ -27,6 +27,12 @@ class Post(models.Model):
         blank=True,
         null=True,
     )
+    private = models.BooleanField(
+        verbose_name="Private post",
+        help_text="If true, this post requires the user be logged in to view.",
+        default=False,
+    )
+
     # Slugs are letters, numbers, underscores, or hyphens (only).
     # By default, the length limit is 50.
     vanity_url = models.SlugField(
