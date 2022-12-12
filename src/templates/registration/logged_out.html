@@ -1,0 +1,14 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+<section class="position-relative py-4 py-xl-5">
+    <div class="container">
+        <div class="row mb-5">
+            <div class="col-md-8 col-xl-6 text-center mx-auto">
+                <h2>Logged out</h2>
+                <a href="{% url 'login'%}">Click here to login again.</a>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
