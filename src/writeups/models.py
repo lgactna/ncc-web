@@ -109,19 +109,20 @@ class Member(models.Model):
         on_delete=models.CASCADE,
     )
 
-    display_name = models.CharField(
+    display_name = models.SlugField(
         verbose_name = "Display name",
         help_text = "Display name used in your URL and in post authoring (if necessary). 35 characters max.",
         max_length=35,
         unique=True,
+        primary_key=True,
     )
 
     title = models.CharField(
         verbose_name = "Title",
         help_text = "Special title (e.g. President, Vice President, etc.).",
         max_length=35,
+        default="",
         blank=True,
-        null=True,
     )
 
     use_display_name_in_posts = models.BooleanField(
@@ -152,10 +153,7 @@ class Member(models.Model):
 
     def get_absolute_url(self):
         """
-        Returns the url for this post.
-
-        If a vanity URL is used, this is the URL returned.
-        Else, returns the internal numeric ID.
+        Returns the url for this member.
         """
         return reverse('member', args=[str(self.display_name)])
 

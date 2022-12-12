@@ -16,6 +16,11 @@ def index(request):
     # Render the HTML template index.html with the data in the context variable
     return render(request, 'index.html', context=context)
 
+class CompetitionsListView(generic.ListView):
+    model = Competition
+    # TODO: standardize posts vs. writeups one day lol
+    context_object_name = 'competitions'
+
 class WriteupsListView(generic.ListView):
     model = Post
     # TODO: standardize posts vs. writeups one day lol
@@ -38,6 +43,12 @@ class MembersListView(generic.ListView):
     # in the future, but I think this is fine for now
     model = Member
     context_object_name = 'members'
+
+class MemberDetailView(generic.DetailView):
+    # Will be necessary to split things out into groups
+    # in the future, but I think this is fine for now
+    model = Member
+    context_object_name = 'member'
 
 def events(request):
     """View function for the events page."""

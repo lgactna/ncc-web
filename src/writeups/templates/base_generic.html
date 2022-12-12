@@ -23,7 +23,7 @@
                     <li class="nav-item"><a class="nav-link" href="{% url 'events' %}">Events</a></li>
                 </ul>
                {% if user.is_authenticated %}
-                    <div class="dropdown ms-md-2"><a class="dropdown-toggle" aria-expanded="false" data-bs-toggle="dropdown" href="#" style="color: white;">{{ user.get_username }}</a>
+                    <div class="dropdown ms-md-2"><a class="dropdown-toggle" aria-expanded="false" data-bs-toggle="dropdown" href="#" style="color: white">{{ user.get_username }}</a>
                         <div class="dropdown-menu">
                             <a class="dropdown-item" href="#">Your profile</a>
                             <a class="dropdown-item" href="#">Create a new post</a>
