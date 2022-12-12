@@ -16,7 +16,13 @@ class Post(models.Model):
     # Order by post time, newest to oldest
     ordering = ['-post_time']
 
-    id = models.AutoField(primary_key=True)
+    # Slugs are letters, numbers, underscores, or hyphens (only).
+    # By default, the length limit is 50.
+    vanity_url = models.SlugField(
+        verbose_name="Vanity URL",
+        help_text="The vanity URL (tool/...). Use dashes to separate words.",
+        primary_key=True,
+    )
     post_time = models.DateTimeField(
         verbose_name="Post time",
         help_text="Date of initial posting.",
@@ -27,15 +33,7 @@ class Post(models.Model):
         blank=True,
         null=True,
     )
-    # Slugs are letters, numbers, underscores, or hyphens (only).
-    # By default, the length limit is 50.
-    vanity_url = models.SlugField(
-        verbose_name = "Vanity URL",
-        help_text="The vanity URL (writeups/...) - if empty, uses the numerical post ID. Use dashes to separate words.",
-        blank=True,
-        null=True,
-        unique=True,
-    )
+
     meta_lead = models.CharField(
         verbose_name = "Meta lead text",
         help_text="The lead text shown in writeup previews and on social media (via the meta-description). Max of 150 characters.",
@@ -92,10 +90,8 @@ class Post(models.Model):
         If a vanity URL is used, this is the URL returned.
         Else, returns the internal numeric ID.
         """
-        if self.vanity_url:
-            return reverse('writeup-detail', args=[str(self.vanity_url)])
-        else:
-            return reverse('writeup-detail', args=[str(self.id)])
+        return reverse('writeup-detail', args=[str(self.vanity_url)])
+
 
     def __str__(self):
         """
@@ -173,18 +169,15 @@ class Competition(models.Model):
     # Order by start date, newest to oldest.
     ordering = ['-start_date']
 
-    id = models.AutoField(primary_key=True)
+    vanity_url = models.SlugField(
+        verbose_name="Vanity URL",
+        help_text="The vanity URL (tool/...). Use dashes to separate words.",
+        primary_key=True,
+    )
     name = models.CharField(
         verbose_name="Competition name",
         help_text="The full name of the competition. 100 chars or less (enforced).",
         max_length=100,
-    )
-    vanity_url = models.SlugField(
-        verbose_name="Vanity URL",
-        help_text="The vanity URL (competition/...) - if empty, uses the numerical ID. Use dashes to separate words.",
-        blank=True,
-        null=True,
-        unique=True,
     )
     start_date = models.DateField(
         verbose_name="Start date",
@@ -233,10 +226,7 @@ class Competition(models.Model):
         """
         Returns the url for this tag.
         """
-        if self.vanity_url:
-            return reverse('writeup', args=[str(self.vanity_url)])
-        else:
-            return reverse('competition', args=[str(self.id)])
+        return reverse('competition', args=[str(self.vanity_url)])
 
     def __str__(self):
         """
@@ -282,7 +272,11 @@ class Placement(models.Model):
         return f"{self.member.user.get_full_name()} - rank {self.rank} in {self.competition}"
 
 class Tool(models.Model):
-    id = models.AutoField(primary_key=True)
+    vanity_url = models.SlugField(
+        verbose_name="Vanity URL",
+        help_text="The vanity URL (tool/...). Use dashes to separate words.",
+        primary_key=True,
+    )
     name = models.CharField(
         verbose_name="Tool name",
         help_text="Name of the tool. 50 chars max.",
@@ -300,13 +294,6 @@ class Tool(models.Model):
     tags = models.ManyToManyField(
         "Tag",
         related_name="tools",  # use tool.tags.all(), for example
-    )
-    vanity_url = models.SlugField(
-        verbose_name="Vanity URL",
-        help_text="The vanity URL (tool/...) - if empty, uses the numerical ID. Use dashes to separate words.",
-        blank=True,
-        null=True,
-        unique=True,
     )
 
     def get_absolute_url(self):
