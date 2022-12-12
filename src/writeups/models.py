@@ -20,7 +20,7 @@ class Post(models.Model):
     # By default, the length limit is 50.
     vanity_url = models.SlugField(
         verbose_name="Vanity URL",
-        help_text="The vanity URL (tool/...). Use dashes to separate words.",
+        help_text="The vanity URL (writeups/...). Use dashes to separate words.",
         primary_key=True,
     )
     post_time = models.DateTimeField(
@@ -171,7 +171,7 @@ class Competition(models.Model):
 
     vanity_url = models.SlugField(
         verbose_name="Vanity URL",
-        help_text="The vanity URL (tool/...). Use dashes to separate words.",
+        help_text="The vanity URL (competition/...). Use dashes to separate words.",
         primary_key=True,
     )
     name = models.CharField(

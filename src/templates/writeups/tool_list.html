@@ -1,0 +1,23 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+<div class="container py-2">
+    <h1 class="text-center">Tools</h1>
+    <p>Every tool we've ever used.</p>
+</div>
+<div class="container py-4 py-xl-5">
+    <div class="row">
+        {% for tool in tools %}
+        <div class="col-sm-6 col-md-4 col-lg-3 col-xl-2 col-xxl-2 d-flex flex-column align-items-center" style="margin-bottom: 30px;">
+            <div style="width: 100px;height: 100px;background: var(--bs-indigo);"></div><a href="{{tool.get_absolute_url}}"><span style="font-size: 1.5em;">{{ tool.name }}</span></a>
+            <p style="text-align: center;">{{ tool.meta_lead }}</p>
+            <div>
+                {% for tag in tool.tags.all %}
+                <a href="{{tag.get_absolute_url}}"><span class="badge bg-primary">{{ tag.name }}</span></a>
+                {% endfor %}
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

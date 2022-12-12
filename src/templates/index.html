@@ -1,0 +1,129 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+<!-- Start: Hero Carousel -->
+<div class="carousel slide" data-bs-ride="carousel" id="carousel-1" style="height: 600px;">
+    <div class="carousel-inner h-100">
+        <div class="carousel-item active h-100"><img class="w-100 d-block position-absolute h-100 fit-cover" src="https://cdn.bootstrapstudio.io/placeholders/1400x800.png" alt="Slide Image" style="z-index: -1;"><!-- Start: 1 Row 1 Column -->
+            <div class="container d-flex flex-column justify-content-center h-100">
+                <div class="row">
+                    <div class="col-md-6 col-xl-4 offset-md-2">
+                        <div style="max-width: 350px;">
+                            <h2 class="text-uppercase fw-bold">NCL Registrations now open</h2>
+                            <p class="my-3">Complete the form below to have your NCL fee waived.</p><a class="btn btn-primary btn-lg me-2" role="button" href="#">NCL Waiver Form</a><a class="btn btn-outline-primary btn-lg" role="button" href="#">More info</a>
+                        </div>
+                    </div>
+                </div>
+            </div><!-- End: 1 Row 1 Column -->
+        </div>
+        <div class="carousel-item h-100"><img class="w-100 d-block position-absolute h-100 fit-cover" src="https://cdn.bootstrapstudio.io/placeholders/1400x800.png" alt="Slide Image" style="z-index: -1;"><!-- Start: 1 Row 1 Column -->
+            <div class="container d-flex flex-column justify-content-center h-100">
+                <div class="row">
+                    <div class="col-md-6 col-xl-4 offset-md-2">
+                        <div style="max-width: 350px;">
+                            <h1 class="text-uppercase fw-bold">The wolfhack takes 7th in cyberseed 2022</h1>
+                            <p class="my-3">Tincidunt laoreet leo, adipiscing taciti tempor. Primis senectus sapien, risus donec ad fusce augue interdum.</p><a class="btn btn-primary btn-lg me-2" role="button" href="#">View Results</a><a class="btn btn-outline-primary btn-lg" role="button" href="#">Writeups</a>
+                        </div>
+                    </div>
+                </div>
+            </div><!-- End: 1 Row 1 Column -->
+        </div>
+    </div>
+    <div>
+        <!-- Start: Previous --><a class="carousel-control-prev" href="#carousel-1" role="button" data-bs-slide="prev"><span class="carousel-control-prev-icon"></span><span class="visually-hidden">Previous</span></a><!-- End: Previous -->
+        <!-- Start: Next --><a class="carousel-control-next" href="#carousel-1" role="button" data-bs-slide="next"><span class="carousel-control-next-icon"></span><span class="visually-hidden">Next</span></a><!-- End: Next -->
+    </div>
+    <ol class="carousel-indicators">
+        <li data-bs-target="#carousel-1" data-bs-slide-to="0" class="active"></li>
+        <li data-bs-target="#carousel-1" data-bs-slide-to="1"></li>
+    </ol>
+</div><!-- End: Hero Carousel -->
+<!-- Start: Features Centered Icons -->
+<div class="container-fluid py-4 py-xl-5 container-dark">
+    <div class="row mb-5">
+        <div class="col-md-8 col-xl-6 text-center mx-auto">
+            <h2>Nevada Cyber Club</h2>
+            <p class="w-lg-50">Developing the next generation of cybersecurity experts.<br></p>
+        </div>
+    </div>
+    <div class="row gy-4 row-cols-1 row-cols-md-2 row-cols-xl-3">
+        <div class="col">
+            <div class="text-center d-flex flex-column align-items-center align-items-xl-center">
+                <div class="bs-icon-lg bs-icon-rounded bs-icon-primary d-flex flex-shrink-0 justify-content-center align-items-center d-inline-block mb-3 bs-icon lg"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-flag">
+                        <path d="M14.778.085A.5.5 0 0 1 15 .5V8a.5.5 0 0 1-.314.464L14.5 8l.186.464-.003.001-.006.003-.023.009a12.435 12.435 0 0 1-.397.15c-.264.095-.631.223-1.047.35-.816.252-1.879.523-2.71.523-.847 0-1.548-.28-2.158-.525l-.028-.01C7.68 8.71 7.14 8.5 6.5 8.5c-.7 0-1.638.23-2.437.477A19.626 19.626 0 0 0 3 9.342V15.5a.5.5 0 0 1-1 0V.5a.5.5 0 0 1 1 0v.282c.226-.079.496-.17.79-.26C4.606.272 5.67 0 6.5 0c.84 0 1.524.277 2.121.519l.043.018C9.286.788 9.828 1 10.5 1c.7 0 1.638-.23 2.437-.477a19.587 19.587 0 0 0 1.349-.476l.019-.007.004-.002h.001M14 1.221c-.22.078-.48.167-.766.255-.81.252-1.872.523-2.734.523-.886 0-1.592-.286-2.203-.534l-.008-.003C7.662 1.21 7.139 1 6.5 1c-.669 0-1.606.229-2.415.478A21.294 21.294 0 0 0 3 1.845v6.433c.22-.078.48-.167.766-.255C4.576 7.77 5.638 7.5 6.5 7.5c.847 0 1.548.28 2.158.525l.028.01C9.32 8.29 9.86 8.5 10.5 8.5c.668 0 1.606-.229 2.415-.478A21.317 21.317 0 0 0 14 7.655V1.222z"></path>
+                    </svg></div>
+                <div class="px-3">
+                    <h4>Competitions</h4>
+                    <p>Erat netus est hendrerit, nullam et quis ad cras porttitor iaculis. Bibendum vulputate cras aenean.</p><a href="{% url 'competitions' %}">View ongoing and past competitions<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-arrow-right">
+                            <path fill-rule="evenodd" d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8z"></path>
+                        </svg></a>
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <div class="text-center d-flex flex-column align-items-center align-items-xl-center">
+                <div class="bs-icon-lg bs-icon-rounded bs-icon-primary d-flex flex-shrink-0 justify-content-center align-items-center d-inline-block mb-3 bs-icon lg"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-pencil">
+                        <path d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z"></path>
+                    </svg></div>
+                <div class="px-3">
+                    <h4>Writeups</h4>
+                    <p>Erat netus est hendrerit, nullam et quis ad cras porttitor iaculis. Bibendum vulputate cras aenean.</p><a href="{% url 'writeups' %}">View student-created writeups<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-arrow-right">
+                            <path fill-rule="evenodd" d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8z"></path>
+                        </svg></a>
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <div class="text-center d-flex flex-column align-items-center align-items-xl-center">
+                <div class="bs-icon-lg bs-icon-rounded bs-icon-primary d-flex flex-shrink-0 justify-content-center align-items-center d-inline-block mb-3 bs-icon lg"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-people">
+                        <path d="M15 14s1 0 1-1-1-4-5-4-5 3-5 4 1 1 1 1h8zm-7.978-1A.261.261 0 0 1 7 12.996c.001-.264.167-1.03.76-1.72C8.312 10.629 9.282 10 11 10c1.717 0 2.687.63 3.24 1.276.593.69.758 1.457.76 1.72l-.008.002a.274.274 0 0 1-.014.002H7.022zM11 7a2 2 0 1 0 0-4 2 2 0 0 0 0 4zm3-2a3 3 0 1 1-6 0 3 3 0 0 1 6 0zM6.936 9.28a5.88 5.88 0 0 0-1.23-.247A7.35 7.35 0 0 0 5 9c-4 0-5 3-5 4 0 .667.333 1 1 1h4.216A2.238 2.238 0 0 1 5 13c0-1.01.377-2.042 1.09-2.904.243-.294.526-.569.846-.816zM4.92 10A5.493 5.493 0 0 0 4 13H1c0-.26.164-1.03.76-1.724.545-.636 1.492-1.256 3.16-1.275zM1.5 5.5a3 3 0 1 1 6 0 3 3 0 0 1-6 0zm3-2a2 2 0 1 0 0 4 2 2 0 0 0 0-4z"></path>
+                    </svg></div>
+                <div class="px-3">
+                    <h4>Members</h4>
+                    <p>Erat netus est hendrerit, nullam et quis ad cras porttitor iaculis. Bibendum vulputate cras aenean.</p><a href="{% url 'members' %}">View a list of members<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-arrow-right">
+                            <path fill-rule="evenodd" d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8z"></path>
+                        </svg></a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div><!-- End: Features Centered Icons -->
+<!-- Start: Recent Posts/Upcoming Events -->
+<div class="container py-3" style="padding-bottom: 50px;">
+    <div class="row">
+        <div class="col-sm-12 col-md-8 col-lg-8 col-xl-8 col-xxl-8">
+            <h2>Recent Posts</h2>
+            <div class="d-lg-flex justify-content-lg-center" style="margin-bottom: 5px;"><button class="btn btn-primary" type="button">View all writeups</button></div>
+            {% for post in recent_posts %}
+            <div class="p-2" style="border-radius: 4px;border: 1px solid rgba(0,0,0,.125);margin-bottom: 10px;"><a href="{{post.get_absolute_url}}">
+                    <h3>{{post.title}}</h3>
+                </a>
+                <div class="d-flex align-items-lg-center"><img class="rounded-circle flex-shrink-0 me-3 fit-cover" width="50" height="50" src="https://cdn.bootstrapstudio.io/placeholders/1400x800.png" style="width: 40px;height: 40px;">
+                    <div class="d-xl-flex align-items-xl-center"><span>by <strong>{{post.author}}</strong>- {{post.post_time}}</span></div>
+                </div>
+                <p>{{ post.meta_lead }}<br></p>
+                <div style="display: flex;">
+                    {% for tag in post.tags.all %}
+                        <span class="badge bg-primary" style="background-color: #{{ tag.theme_color }}">{{ tag.name }}</span>
+                    {% endfor %}
+                    <a href="{{post.get_absolute_url}}" style="margin-left: auto;font-weight: bold;">Continue reading</a>
+                </div>
+            </div>
+            {% endfor %}
+
+        </div>
+        <div class="col">
+            <h3 class="text-center">Upcoming Events</h3><span>Small calendar embed goes here</span>
+            <div class="d-flex flex-row align-items-center justify-content-lg-start align-items-lg-center" style="margin-bottom: 5px;">
+                <div class="d-flex flex-column justify-content-center align-items-center container-dark" style="width: 65px;height: 65px;border-radius: 36px;flex: 0 0 65px;margin-right: 10px;"><span style="font-size: 16px;">AUG</span><span style="font-size: 18px;line-height: 18px;">22</span></div><span style="font-weight: bold;">OSINT Workshop</span>
+            </div>
+            <div class="d-flex flex-row align-items-center justify-content-lg-start align-items-lg-center" style="margin-bottom: 5px;">
+                <div class="d-flex flex-column justify-content-center align-items-center align-items-lg-center container-dark" style="width: 65px;height: 65px;border-radius: 36px;flex: 0 0 65px;margin-right: 10px;"><span style="font-size: 16px;">AUG</span><span style="font-size: 18px;line-height: 18px;">29</span></div><span style="font-weight: bold;">Cryptography Workshop</span>
+            </div>
+            <div class="d-flex flex-row align-items-center justify-content-lg-start align-items-lg-center" style="margin-bottom: 5px;">
+                <div class="d-flex flex-column justify-content-center align-items-center align-items-lg-center container-dark" style="width: 65px;height: 65px;border-radius: 36px;flex: 0 0 65px;margin-right: 10px;"><span style="font-size: 16px;">SEP</span><span style="font-size: 18px;line-height: 18px;">7</span></div><span style="font-weight: bold;">Forensics Workshop</span>
+            </div>
+        </div>
+    </div>
+</div><!-- End: Recent Posts/Upcoming Events -->
+{% endblock %}

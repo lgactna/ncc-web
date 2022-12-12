@@ -1,0 +1,53 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+<div class="container py-2">
+    <h1 class="text-center">Events</h1>
+    <div class="row">
+        <div class="col-md-8 col-xl-6 text-center mx-auto">
+            <h2>Calendar</h2>
+            <p class="w-lg-50">A full list of events, updated weekly. Register for events through Discord.</p>
+        </div>
+    </div><span>Google Calendar embed, 800x600</span>
+</div><!-- Start: Articles Cards -->
+<div class="container py-4 py-xl-5">
+    <div class="row">
+        <div class="col-md-8 col-xl-6 text-center mx-auto">
+            <h2>Recurring</h2>
+            <p class="w-lg-50">The Nevada Cyber Club annually hosts and participates in major events, including CTFs, conferences, and community service.</p>
+        </div>
+    </div><!-- Start: Banner Heading Image -->
+    <section>
+        <!-- Start: 1 Row 2 Columns -->
+        <div class="container" style="margin-bottom: 10px;">
+            <div class="bg-dark border rounded border-0 border-dark overflow-hidden">
+                <div class="row g-0">
+                    <div class="col-md-6">
+                        <div class="text-white p-4 p-md-5">
+                            <h2 class="fw-bold text-white mb-3">Cyber Clinics</h2>
+                            <p class="mb-4">Cyber Clinics follow a “triage, treat, and train” methodology where <br>trained “Cyber-Medics” provide personalized cyber-security guidance.<br><br>Events have been held at multiple venues throughout Reno, including the Governor's Mansion, the Reno Air Races, and the UNR Knowledge Center.</p>
+                            <div class="my-3"><a class="btn btn-primary btn-lg me-2" role="button" href="#">More information</a></div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 order-first order-md-last" style="min-height: 250px;"><img class="w-100 h-100 fit-cover" src="https://cdn.bootstrapstudio.io/placeholders/1400x800.png"></div>
+                </div>
+            </div>
+        </div><!-- End: 1 Row 2 Columns -->
+        <!-- Start: 1 Row 2 Columns -->
+        <div class="container">
+            <div class="bg-dark border rounded border-0 border-dark overflow-hidden">
+                <div class="row g-0">
+                    <div class="col-md-6">
+                        <div class="text-white p-4 p-md-5">
+                            <h2 class="fw-bold text-white mb-3">Workshops</h2>
+                            <p class="mb-4">Our members hold workshops on special topics, ranging from competition training to professional topics.</p>
+                            <div class="my-3"><a class="btn btn-primary btn-lg me-2" role="button" href="#">Suggest a workshop</a><a class="btn btn-light btn-lg" role="button" href="#">Workshop schedule</a></div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 order-first order-md-last" style="min-height: 250px;"><img class="w-100 h-100 fit-cover" src="https://cdn.bootstrapstudio.io/placeholders/1400x800.png"></div>
+                </div>
+            </div>
+        </div><!-- End: 1 Row 2 Columns -->
+    </section><!-- End: Banner Heading Image -->
+</div><!-- End: Articles Cards -->
+{% endblock %}
