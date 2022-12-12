@@ -93,9 +93,9 @@ class Post(models.Model):
         Else, returns the internal numeric ID.
         """
         if self.vanity_url:
-            return reverse('writeup', args=[str(self.vanity_url)])
+            return reverse('writeup-detail', args=[str(self.vanity_url)])
         else:
-            return reverse('writeup', args=[str(self.id)])
+            return reverse('writeup-detail', args=[str(self.id)])
 
     def __str__(self):
         """
@@ -319,7 +319,7 @@ class Tool(models.Model):
         return self.name
 
 class Tag(models.Model):
-    name = models.CharField(
+    name = models.SlugField(
         verbose_name="Tag name",
         help_text="The name used for this tag. 20 characters max.",
         primary_key=True,
