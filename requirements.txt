@@ -8,3 +8,4 @@ dj-database-url
 gunicorn
 whitenoise
 django-cors-headers
+Pillow
