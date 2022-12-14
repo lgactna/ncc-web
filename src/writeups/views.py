@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from .models import Post, Member, Competition, Placement, Tool, Tag
 from django.views import generic
+from django.views.decorators.csrf import csrf_exempt
 from django.http import Http404
 
 def index(request):
@@ -18,8 +19,11 @@ def index(request):
 
 class CompetitionsListView(generic.ListView):
     model = Competition
-    # TODO: standardize posts vs. writeups one day lol
     context_object_name = 'competitions'
+
+class CompetitionDetailView(generic.DetailView):
+    model = Competition
+    context_object_name = 'competition'
 
 class WriteupsListView(generic.ListView):
     model = Post
@@ -29,6 +33,11 @@ class WriteupsListView(generic.ListView):
 class WriteupDetailView(generic.DetailView):
     model = Post
     context_object_name = 'writeup'
+
+@csrf_exempt
+def writeup_images(request, pk: str=None):
+    print("test")
+    pass
 
 class ToolsListView(generic.ListView):
     model = Tool
@@ -50,6 +59,12 @@ class MemberDetailView(generic.DetailView):
     model = Member
     context_object_name = 'member'
 
+class TagDetailView(generic.DetailView):
+    # Will be necessary to split things out into groups
+    # in the future, but I think this is fine for now
+    model = Tag
+    context_object_name = 'tag'
+
 def events(request):
     """View function for the events page."""
 
@@ -57,8 +72,3 @@ def events(request):
 
     return render(request, 'events.html')
 
-class TagDetailedView(generic.DetailView):
-    # Will be necessary to split things out into groups
-    # in the future, but I think this is fine for now
-    model = Tag
-    context_object_name = 'tag'

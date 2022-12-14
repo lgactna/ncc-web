@@ -1,0 +1,54 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+<!-- Start: Banner Heading -->
+    <section class="py-4 py-xl-5">
+        <div class="container">
+            <div class="row border rounded border-0 p-4 p-md-5">
+                <div class="col-md-6 col-lg-3 d-flex justify-content-center align-items-center">
+                    {% if tool.image %}
+                        <img width="200" height="200" src="{{ tool.image.url }}">
+                    {% else %}
+                        <img class="fit-cover" width="200" height="200" src="https://cdn.bootstrapstudio.io/placeholders/1400x800.png">
+                    {% endif %}
+                </div>
+                <div class="col-md-6 col-xl-9 d-flex flex-column justify-content-center">
+                    <h1>{{ tool.name }}</h1>
+                    <div>
+                        {% for tool_tag in tool.tags.all %}
+                        <span class="badge" style="background-color: #{{ tool_tag.theme_color }}; margin-right: 5px;">{{ tool_tag.name }}</span>
+                        {% endfor %}
+                    </div>
+                    <p class="mb-1">
+                        {{ tool.meta_lead }}
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section><!-- End: Banner Heading -->
+    <div class="container">
+        <h1>Details</h1><span><em>This user hasn't added any profile content!</em></span>
+    </div>
+    <div class="container">
+        <h1>Writeups</h1>
+        {% if not tool.posts %}
+            <span><em>There aren't any writeups for this tool yet!</em></span>
+        {% else %}
+            {% for post in tool.posts.all %}
+                 <div class="p-2" style="border-radius: 4px;border: 1px solid rgba(0,0,0,.125);margin-bottom: 10px;"><a href="{{post.get_absolute_url}}">
+                    <h3>{{post.title}}</h3>
+                    </a>
+                    <div class="d-flex align-items-lg-center"><img class="rounded-circle flex-shrink-0 me-3 fit-cover" width="50" height="50" src="https://cdn.bootstrapstudio.io/placeholders/1400x800.png" style="width: 40px;height: 40px;">
+                        <div class="d-xl-flex align-items-xl-center"><span>by <strong>{{post.author}}</strong>- {{post.post_time}}</span></div>
+                    </div>
+                    <p>{{ post.meta_lead }}<br></p>
+                    <div style="display: flex;">
+                        {% for tag in post.tags.all %}
+                            <a href="{{ tag.get_absolute_url }}"><span class="badge bg-primary" style="background-color: #{{ tag.theme_color }}; margin-right: 5px">{{ tag.name }}</span></a>
+                        {% endfor %}
+                        <a href="{{post.get_absolute_url}}" style="margin-left: auto;font-weight: bold;">Continue reading</a>
+                    </div>
+                </div>
+            {% endfor %}
+        {% endif %}
+{% endblock %}

@@ -5,18 +5,28 @@
     <section class="py-4 py-xl-5">
         <div class="container">
             <div class="row text-white bg-dark border rounded border-0 p-4 p-md-5">
-                <div class="col-md-6 col-lg-3 d-flex justify-content-center align-items-center"><img style="width: 200px;height: 200px;"></div>
+                <div class="col-md-6 col-lg-3 d-flex justify-content-center align-items-center">
+                    {% if user.profile_image %}
+                        <img width="200" height="200" src="{{ user.profile_image }}">
+                    {% else %}
+                        <img class="fit-cover" width="200" height="200" src="https://cdn.bootstrapstudio.io/placeholders/1400x800.png">
+                    {% endif %}
+                </div>
                 <div class="col-md-6 col-xl-9 d-flex flex-column justify-content-center">
                     <h1>{{ member.user.get_full_name }}</h1><span>{{ member.display_name }}</span>
                     {% if member.title %}
                         <p class="mb-1"><em>{{ member.title }}</em></p>
                     {% endif %}
+                    {% if member.user.email %}
                     <p class="mb-1"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-envelope">
                             <path fill-rule="evenodd" d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V4Zm2-1a1 1 0 0 0-1 1v.217l7 4.2 7-4.2V4a1 1 0 0 0-1-1H2Zm13 2.383-4.708 2.825L15 11.105V5.383Zm-.034 6.876-5.64-3.471L8 9.583l-1.326-.795-5.64 3.47A1 1 0 0 0 2 13h12a1 1 0 0 0 .966-.741ZM1 11.105l4.708-2.897L1 5.383v5.722Z"></path>
                         </svg>&nbsp;{{ member.user.email }}</p>
+                    {% endif %}
+                    {% if member.discord_tag %}
                     <p class="mb-1"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-discord">
                             <path d="M13.545 2.907a13.227 13.227 0 0 0-3.257-1.011.05.05 0 0 0-.052.025c-.141.25-.297.577-.406.833a12.19 12.19 0 0 0-3.658 0 8.258 8.258 0 0 0-.412-.833.051.051 0 0 0-.052-.025c-1.125.194-2.22.534-3.257 1.011a.041.041 0 0 0-.021.018C.356 6.024-.213 9.047.066 12.032c.001.014.01.028.021.037a13.276 13.276 0 0 0 3.995 2.02.05.05 0 0 0 .056-.019c.308-.42.582-.863.818-1.329a.05.05 0 0 0-.01-.059.051.051 0 0 0-.018-.011 8.875 8.875 0 0 1-1.248-.595.05.05 0 0 1-.02-.066.051.051 0 0 1 .015-.019c.084-.063.168-.129.248-.195a.05.05 0 0 1 .051-.007c2.619 1.196 5.454 1.196 8.041 0a.052.052 0 0 1 .053.007c.08.066.164.132.248.195a.051.051 0 0 1-.004.085 8.254 8.254 0 0 1-1.249.594.05.05 0 0 0-.03.03.052.052 0 0 0 .003.041c.24.465.515.909.817 1.329a.05.05 0 0 0 .056.019 13.235 13.235 0 0 0 4.001-2.02.049.049 0 0 0 .021-.037c.334-3.451-.559-6.449-2.366-9.106a.034.034 0 0 0-.02-.019Zm-8.198 7.307c-.789 0-1.438-.724-1.438-1.612 0-.889.637-1.613 1.438-1.613.807 0 1.45.73 1.438 1.613 0 .888-.637 1.612-1.438 1.612Zm5.316 0c-.788 0-1.438-.724-1.438-1.612 0-.889.637-1.613 1.438-1.613.807 0 1.451.73 1.438 1.613 0 .888-.631 1.612-1.438 1.612Z"></path>
                         </svg>&nbsp;{{ member.discord_tag }}</p>
+                    {% endif %}
                 </div>
             </div>
         </div>
@@ -43,20 +53,20 @@
         <h1>Recent posts</h1>
         {% if member.posts.all %}
             {% for post in member.posts.all %}
-                 <div class="p-2" style="border-radius: 4px;border: 1px solid rgba(0,0,0,.125);margin-bottom: 10px;"><a href="{{post.get_absolute_url}}">
-                        <h3>{{post.title}}</h3>
-                    </a>
-                    <div class="d-flex align-items-lg-center"><img class="rounded-circle flex-shrink-0 me-3 fit-cover" width="50" height="50" src="https://cdn.bootstrapstudio.io/placeholders/1400x800.png" style="width: 40px;height: 40px;">
-                        <div class="d-xl-flex align-items-xl-center"><span>by <strong>{{post.author}}</strong>- {{post.post_time}}</span></div>
-                    </div>
-                    <p>{{ post.meta_lead }}<br></p>
-                    <div style="display: flex;">
-                        {% for tag in post.tags.all %}
-                            <span class="badge bg-primary" style="background-color: #{{ tag.theme_color }}">{{ tag.name }}</span>
-                        {% endfor %}
-                        <a href="{{post.get_absolute_url}}" style="margin-left: auto;font-weight: bold;">Continue reading</a>
-                    </div>
+            <div class="p-2" style="border-radius: 4px;border: 1px solid rgba(0,0,0,.125);margin-bottom: 10px;"><a href="{{post.get_absolute_url}}">
+                <h3>{{post.title}}</h3>
+                </a>
+                <div class="d-flex align-items-lg-center"><img class="rounded-circle flex-shrink-0 me-3 fit-cover" width="50" height="50" src="https://cdn.bootstrapstudio.io/placeholders/1400x800.png" style="width: 40px;height: 40px;">
+                    <div class="d-xl-flex align-items-xl-center"><span>by <strong>{{post.author}}</strong>- {{post.post_time}}</span></div>
                 </div>
+                <p>{{ post.meta_lead }}<br></p>
+                <div style="display: flex;">
+                    {% for tag in post.tags.all %}
+                        <a href="{{ tag.get_absolute_url }}"><span class="badge" style="background-color: #{{ tag.theme_color }}; margin-right: 5px">{{ tag.name }}</span></a>
+                    {% endfor %}
+                    <a href="{{post.get_absolute_url}}" style="margin-left: auto;font-weight: bold;">Continue reading</a>
+                </div>
+            </div>
             {% endfor %}
         {% else %}
             <span><em>This user has not yet made any posts!</em></span>

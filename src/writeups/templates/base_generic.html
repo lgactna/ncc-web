@@ -25,8 +25,8 @@
                {% if user.is_authenticated %}
                     <div class="dropdown ms-md-2"><a class="dropdown-toggle" aria-expanded="false" data-bs-toggle="dropdown" href="#" style="color: white">{{ user.get_username }}</a>
                         <div class="dropdown-menu">
-                            <a class="dropdown-item" href="#">Your profile</a>
-                            <a class="dropdown-item" href="#">Create a new post</a>
+                            <a class="dropdown-item" href="{{ user.member.get_absolute_url }}">Your profile</a>
+                            <a class="dropdown-item disabled" href="#">Create a new post</a>
                             <a class="dropdown-item" href="{% url 'logout' %}?next={{ request.path }}">Log out</a></div>
                     </div>
                {% else %}

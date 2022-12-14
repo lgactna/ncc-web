@@ -20,7 +20,8 @@
                                     <path d="M4.81 1.37A6.5 6.5 0 0 1 14.56 7a.5.5 0 1 1-1 0 5.5 5.5 0 0 0-8.25-4.765.5.5 0 0 1-.5-.865Zm-.89 1.257a.5.5 0 0 1 .04.706A5.478 5.478 0 0 0 2.56 7a.5.5 0 0 1-1 0c0-1.664.626-3.184 1.655-4.333a.5.5 0 0 1 .706-.04ZM1.915 8.02a.5.5 0 0 1 .346.616l-.779 2.767a.5.5 0 1 1-.962-.27l.778-2.767a.5.5 0 0 1 .617-.346Zm12.15.481a.5.5 0 0 1 .49.51c-.03 1.499-.161 3.025-.727 4.533l-.07.187a.5.5 0 0 1-.936-.351l.07-.187c.506-1.35.634-2.74.663-4.202a.5.5 0 0 1 .51-.49Z"></path>
                                 </svg><span class="d-flex align-items-center"><strong>Forensics</strong></span></div>
                         </div>
-                        <div class="card-body p-4 container-dark"><span style="font-size: 20px;">{{ writeup.competition.name }}</span>
+                        <div class="card-body p-4 container-dark">
+                            <a href="{{ writeup.competition.get_absolute_url }}"><span style="font-size: 20px;">{{ writeup.competition.name }}</span></a>
                             <p class="card-text mb-0">CTF</p><span class="d-flex align-items-center"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-calendar">
                                     <path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zM1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4H1z"></path>
                                 </svg>&nbsp;{{ writeup.competition.start_date }} - {{ writeup.competition.end_date }}</span><span class="d-flex align-items-center"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-people">
@@ -32,20 +33,28 @@
                 <div id="tools-container">
                     <div class="row">
                         {% for tool in writeup.tools.all %}
-                        <div class="col-3 d-flex justify-content-center align-items-center" data-bs-toggle="tooltip" data-bss-tooltip="" title="{{ tool.name }}"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-terminal" style="width: 50px;height: 50px;">
-                                <path d="M6 9a.5.5 0 0 1 .5-.5h3a.5.5 0 0 1 0 1h-3A.5.5 0 0 1 6 9zM3.854 4.146a.5.5 0 1 0-.708.708L4.793 6.5 3.146 8.146a.5.5 0 1 0 .708.708l2-2a.5.5 0 0 0 0-.708l-2-2z"></path>
-                                <path d="M2 1a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V3a2 2 0 0 0-2-2H2zm12 1a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V3a1 1 0 0 1 1-1h12z"></path>
-                            </svg></div>
+                        <a href="{{ tool.get_absolute_url }}">
+                            <div class="col-3 d-flex justify-content-center align-items-center" data-bs-toggle="tooltip" data-bss-tooltip="" title="{{ tool.name }}">
+                                {% if tool.image %}
+                                    <img width="50" height="50" src="{{ tool.image.url }}">
+                                {% else %}
+                                    <img class="fit-cover" width="50" height="50" src="https://cdn.bootstrapstudio.io/placeholders/1400x800.png">
+                                {% endif %}
+                            </div>
+                        </a>
                         {% endfor %}
                     </div>
                 </div><span style="font-size: 24px;"><strong>Tags</strong></span>
                 <div id="tags-container">
                     {% for tag in writeup.tags.all %}
-                    <span class="badge bg-primary">test</span>
+                        <a href="{{ tag.get_absolute_url }}"><span class="badge bg-primary" style="background-color: #{{ tag.theme_color }}; margin-right: 5px">{{ tag.name }}</span></a>
                     {% endfor %}
                 </div>
             </div>
-            <div class="col"><img id="image-lead" src="assets/img/cyberclub-logo-invert.png" width="100%">
+            <div class="col">
+                {% if writeup.meta_image %}
+                    <img id="image-lead" src="{{ writeup.meta_image.url }}" width="100%">
+                {% endif %}
                 <p id="paragraph-lead"><em>{{ writeup.meta_lead }}</em></p>
                 {{ writeup.content|safe }}
             </div>

@@ -39,6 +39,12 @@ class Post(models.Model):
         help_text="The lead text shown in writeup previews and on social media (via the meta-description). Max of 150 characters.",
         max_length = 150,
     )
+    meta_image = models.ImageField(
+        upload_to="post-banners",
+        blank=True,
+        null=True,
+    )
+
     title = models.CharField(
         verbose_name= "Post title",
         help_text = "The post title; also used as the meta-title and the page title (with '| Nevada Cyber Club appended'). Max of 55 characters.",
@@ -115,6 +121,11 @@ class Member(models.Model):
         max_length=35,
         unique=True,
         primary_key=True,
+    )
+    profile_image = models.ImageField(
+        upload_to="profiles",
+        blank=True,
+        null=True,
     )
 
     title = models.CharField(
@@ -203,6 +214,21 @@ class Competition(models.Model):
         default='i',
     )
 
+    format = models.CharField(
+        help_text="Competition format (CTF/RvB/etc.)",
+        default="CTF",
+        max_length=20,
+    )
+
+    registration_link = models.URLField(
+        help_text="Registration link.",
+        default="",
+    )
+    competition_link = models.URLField(
+        help_text="Link to competition website.",
+        default="",
+    )
+
     hex_validation = RegexValidator(r'^[0-9a-fA-F]*$', 'Only valid hex characters allowed.')
     length_validation = MinLengthValidator(6, message="Hex values must be exactly 6 in length.")
     theme_color = models.CharField(
@@ -280,6 +306,11 @@ class Tool(models.Model):
         help_text="Name of the tool. 50 chars max.",
         max_length=50,
     )
+    image = models.ImageField(
+        upload_to="tool-images",
+        blank=True,
+        null=True,
+    )
     content = tinymce_models.HTMLField(
         verbose_name="Page content",
         help_text="A TinyMCE-driven field for the tool's page content.",
@@ -310,6 +341,11 @@ class Tag(models.Model):
         primary_key=True,
         max_length=20,
     )
+    content = tinymce_models.HTMLField(
+        verbose_name="Page content",
+        help_text="A TinyMCE-driven field for the tag's page content.",
+    )
+
     hex_validation = RegexValidator(r'^[0-9a-fA-F]*$', 'Only valid hex characters allowed.')
     length_validation = MinLengthValidator(6, message="Hex values must be exactly 6 in length.")
     theme_color = models.CharField(

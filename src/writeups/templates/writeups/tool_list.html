@@ -9,14 +9,19 @@
     <div class="row">
         {% for tool in tools %}
         <div class="col-sm-6 col-md-4 col-lg-3 col-xl-2 col-xxl-2 d-flex flex-column align-items-center" style="margin-bottom: 30px;">
-            <div style="width: 100px;height: 100px;background: var(--bs-indigo);"></div><a href="{{tool.get_absolute_url}}"><span style="font-size: 1.5em;">{{ tool.name }}</span></a>
+            {% if tool.image %}
+                <img width="100" height="100" src="{{ tool.image.url }}">
+            {% else %}
+                <img class="fit-cover" width="100" height="100" src="https://cdn.bootstrapstudio.io/placeholders/1400x800.png">
+            {% endif %}
+            <a href="{{tool.get_absolute_url}}"><span style="font-size: 1.5em;">{{ tool.name }}</span></a>
             <p style="text-align: center;">{{ tool.meta_lead }}</p>
             <div>
                 {% for tag in tool.tags.all %}
-                <a href="{{tag.get_absolute_url}}"><span class="badge bg-primary">{{ tag.name }}</span></a>
+                <a href="{{tag.get_absolute_url}}"><span class="badge">{{ tag.name }}</span></a>
                 {% endfor %}
             </div>
-        </div>
+        </img>
         {% endfor %}
     </div>
 </div>
