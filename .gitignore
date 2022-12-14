@@ -128,4 +128,8 @@ dmypy.json
 # Pyre type checker
 .pyre/
 
+# PyCharm
 .idea/
+
+# Don't commit static files
+static/
