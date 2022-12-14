@@ -69,6 +69,5 @@ def events(request):
     """View function for the events page."""
 
     # Not quite sure what the best way to handle this is
-
     return render(request, 'events.html')
 
