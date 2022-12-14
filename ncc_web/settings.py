@@ -28,9 +28,17 @@ SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', "django-insecure-k@fedlpjren(n_
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.environ.get('DJANGO_DEBUG', '') == 'True'
 
-ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'https://ncc-web-writeups.azurewebsites.net']
+ALLOWED_HOSTS = [
+    '127.0.0.1',
+    'localhost',
+    'https://ncc-web-writeups.azurewebsites.net',
+    'web-production-58a0.up.railway.app',
+]
 
-CSRF_TRUSTED_ORIGINS = ['https://ncc-web-writeups.azurewebsites.net']
+CSRF_TRUSTED_ORIGINS = [
+    'https://ncc-web-writeups.azurewebsites.net',
+    'https://web-production-58a0.up.railway.app/',
+]
 
 # Application definition
 
