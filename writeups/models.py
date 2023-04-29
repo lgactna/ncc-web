@@ -8,6 +8,7 @@ from django.contrib.auth.models import User
 from django.core.validators import RegexValidator, MinLengthValidator, MinValueValidator
 from tinymce import models as tinymce_models
 
+from .formatChecker import SizeRestrictedFileField
 
 class Post(models.Model):
     """
@@ -19,6 +20,8 @@ class Post(models.Model):
 
     # Slugs are letters, numbers, underscores, or hyphens (only).
     # By default, the length limit is 50.
+    # TODO: Eventually this should fall under writeups/competitions/..., because that
+    # just makes more sense in the vast majority of cases. 
     vanity_url = models.SlugField(
         verbose_name="Vanity URL",
         help_text="The vanity URL (writeups/...). Use dashes to separate words.",
@@ -58,6 +61,18 @@ class Post(models.Model):
     content = tinymce_models.HTMLField(
         verbose_name="Post content",
         help_text="A TinyMCE-driven field for the post content.",
+    )
+
+    def make_challenge_filepath(self, filename):
+        return f"challenge_files/{self.vanity_url}/{filename}"
+
+    challenge_files = SizeRestrictedFileField(
+        verbose_name="Post files",
+        help_text="A compressed archive of this challenge's files. A 500MB limit is enforced.",
+        upload_to=make_challenge_filepath,
+        max_upload_size=5242880,
+        blank=True,
+        null=True
     )
 
     # I don't ever see us deleting users, but I'm making the
