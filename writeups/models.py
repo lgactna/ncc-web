@@ -8,13 +8,14 @@ from django.contrib.auth.models import User
 from django.core.validators import RegexValidator, MinLengthValidator, MinValueValidator
 from tinymce import models as tinymce_models
 
-# Create your models here.
+
 class Post(models.Model):
     """
     Represents an arbitrary post.
     """
+
     # Order by post time, newest to oldest
-    ordering = ['-post_time']
+    ordering = ["-post_time"]
 
     # Slugs are letters, numbers, underscores, or hyphens (only).
     # By default, the length limit is 50.
@@ -35,9 +36,9 @@ class Post(models.Model):
     )
 
     meta_lead = models.CharField(
-        verbose_name = "Meta lead text",
+        verbose_name="Meta lead text",
         help_text="The lead text shown in writeup previews and on social media (via the meta-description). Max of 150 characters.",
-        max_length = 150,
+        max_length=150,
     )
     meta_image = models.ImageField(
         upload_to="post-banners",
@@ -46,29 +47,24 @@ class Post(models.Model):
     )
 
     title = models.CharField(
-        verbose_name= "Post title",
-        help_text = "The post title; also used as the meta-title and the page title (with '| Nevada Cyber Club appended'). Max of 55 characters.",
-        max_length = 55,
+        verbose_name="Post title",
+        help_text="The post title; also used as the meta-title and the page title (with '| Nevada Cyber Club appended'). Max of 55 characters.",
+        max_length=55,
     )
 
     # https://django-tinymce.readthedocs.io/en/latest/usage.html#the-htmlfield-model-field-type
     # It's basically a glorified TextField.
     content = tinymce_models.HTMLField(
-        verbose_name = "Post content",
-        help_text = "A TinyMCE-driven field for the post content."
+        verbose_name="Post content",
+        help_text="A TinyMCE-driven field for the post content.",
     )
-
 
     # I don't ever see us deleting users, but I'm making the
     # judgement that we won't delete posts as well if this happens.
     # Instead, replace it with some text like "(deleted user)" or
     # "(anonymous)".
     author = models.ForeignKey(
-        "Member",
-        on_delete=models.SET_NULL,
-        blank=True,
-        null=True,
-        related_name="posts"
+        "Member", on_delete=models.SET_NULL, blank=True, null=True, related_name="posts"
     )
     # Same with competitions.
     competition = models.ForeignKey(
@@ -76,16 +72,16 @@ class Post(models.Model):
         on_delete=models.SET_NULL,
         blank=True,
         null=True,
-        related_name="posts"
+        related_name="posts",
     )
     tags = models.ManyToManyField(
         "Tag",
-        related_name = "posts", # use tags.posts.all(), for example
-        blank=True, 
+        related_name="posts",  # use tags.posts.all(), for example
+        blank=True,
     )
     tools = models.ManyToManyField(
         "Tool",
-        related_name = "posts",
+        related_name="posts",
         blank=True,
     )
 
@@ -96,8 +92,7 @@ class Post(models.Model):
         If a vanity URL is used, this is the URL returned.
         Else, returns the internal numeric ID.
         """
-        return reverse('writeup-detail', args=[str(self.vanity_url)])
-
+        return reverse("writeup-detail", args=[str(self.vanity_url)])
 
     def __str__(self):
         """
@@ -106,6 +101,7 @@ class Post(models.Model):
         :return: The post title.
         """
         return self.title
+
 
 class Member(models.Model):
     # https://docs.djangoproject.com/en/dev/topics/auth/customizing/#extending-the-existing-user-model
@@ -116,8 +112,8 @@ class Member(models.Model):
     )
 
     display_name = models.SlugField(
-        verbose_name = "Display name",
-        help_text = "Display name used in your URL and in post authoring (if necessary). 35 characters max.",
+        verbose_name="Display name",
+        help_text="Display name used in your URL and in post authoring (if necessary). 35 characters max.",
         max_length=35,
         unique=True,
         primary_key=True,
@@ -129,20 +125,20 @@ class Member(models.Model):
     )
 
     title = models.CharField(
-        verbose_name = "Title",
-        help_text = "Special title (e.g. President, Vice President, etc.).",
+        verbose_name="Title",
+        help_text="Special title (e.g. President, Vice President, etc.).",
         max_length=35,
         default="",
         blank=True,
     )
 
     use_display_name_in_posts = models.BooleanField(
-        verbose_name = "Use display name in posts",
-        help_text = "Whether to use the display name or your full name as the post author.",
+        verbose_name="Use display name in posts",
+        help_text="Whether to use the display name or your full name as the post author.",
     )
 
     content = tinymce_models.HTMLField(
-        verbose_name = "Profile content",
+        verbose_name="Profile content",
         help_text="A TinyMCE-driven field for the profile content.",
         blank=True,
         null=True,
@@ -166,7 +162,7 @@ class Member(models.Model):
         """
         Returns the url for this member.
         """
-        return reverse('member', args=[str(self.display_name)])
+        return reverse("member", args=[str(self.display_name)])
 
     def __str__(self):
         if self.user.get_full_name():
@@ -174,9 +170,10 @@ class Member(models.Model):
         else:
             return f"<no name> ({self.display_name})"
 
+
 class Competition(models.Model):
     # Order by start date, newest to oldest.
-    ordering = ['-start_date']
+    ordering = ["-start_date"]
 
     vanity_url = models.SlugField(
         verbose_name="Vanity URL",
@@ -202,16 +199,16 @@ class Competition(models.Model):
     )
 
     COMPETITION_TYPE = (
-        ('i', 'Individual'),
-        ('t', 'Team'),
+        ("i", "Individual"),
+        ("t", "Team"),
     )
 
     type = models.CharField(
-        help_text='Competition type (individual/team/etc.)',
+        help_text="Competition type (individual/team/etc.)",
         max_length=1,
         choices=COMPETITION_TYPE,
         blank=True,
-        default='i',
+        default="i",
     )
 
     format = models.CharField(
@@ -229,13 +226,17 @@ class Competition(models.Model):
         default="",
     )
 
-    hex_validation = RegexValidator(r'^[0-9a-fA-F]*$', 'Only valid hex characters allowed.')
-    length_validation = MinLengthValidator(6, message="Hex values must be exactly 6 in length.")
+    hex_validation = RegexValidator(
+        r"^[0-9a-fA-F]*$", "Only valid hex characters allowed."
+    )
+    length_validation = MinLengthValidator(
+        6, message="Hex values must be exactly 6 in length."
+    )
     theme_color = models.CharField(
         max_length=6,
         help_text="The background color used for this competition. Enter as 6 hex characters. Please make sure there's sufficient contrast!",
         validators=[hex_validation, length_validation],
-        default="002E62", # Navy blue used throughout the website
+        default="002E62",  # Navy blue used throughout the website
     )
     meta_lead = models.CharField(
         verbose_name="Meta lead text",
@@ -246,11 +247,12 @@ class Competition(models.Model):
         verbose_name="Page content",
         help_text="A TinyMCE-driven field for the post content/body copy.",
     )
+
     def get_absolute_url(self):
         """
         Returns the url for this tag.
         """
-        return reverse('competition', args=[str(self.vanity_url)])
+        return reverse("competition", args=[str(self.vanity_url)])
 
     def __str__(self):
         """
@@ -260,11 +262,10 @@ class Competition(models.Model):
         """
         return self.name
 
+
 class Placement(models.Model):
     competition = models.ForeignKey(
-        "Competition",
-        on_delete=models.CASCADE,
-        related_name="placements"
+        "Competition", on_delete=models.CASCADE, related_name="placements"
     )
     member = models.ForeignKey(
         "Member",
@@ -294,6 +295,7 @@ class Placement(models.Model):
         String representing placement.
         """
         return f"{self.member.user.get_full_name()} - rank {self.rank} in {self.competition}"
+
 
 class Tool(models.Model):
     vanity_url = models.SlugField(
@@ -329,10 +331,11 @@ class Tool(models.Model):
         """
         Returns the url for this tag.
         """
-        return reverse('tool', args=[str(self.vanity_url)])
+        return reverse("tool", args=[str(self.vanity_url)])
 
     def __str__(self):
         return self.name
+
 
 class Tag(models.Model):
     name = models.SlugField(
@@ -346,20 +349,24 @@ class Tag(models.Model):
         help_text="A TinyMCE-driven field for the tag's page content.",
     )
 
-    hex_validation = RegexValidator(r'^[0-9a-fA-F]*$', 'Only valid hex characters allowed.')
-    length_validation = MinLengthValidator(6, message="Hex values must be exactly 6 in length.")
+    hex_validation = RegexValidator(
+        r"^[0-9a-fA-F]*$", "Only valid hex characters allowed."
+    )
+    length_validation = MinLengthValidator(
+        6, message="Hex values must be exactly 6 in length."
+    )
     theme_color = models.CharField(
         max_length=6,
         help_text="The background color used for this competition. Enter as 6 hex characters. Please make sure there's sufficient contrast!",
         validators=[hex_validation, length_validation],
-        default="002E62", # Navy blue used throughout the website
+        default="002E62",  # Navy blue used throughout the website
     )
 
     def get_absolute_url(self):
         """
         Returns the url for this tag.
         """
-        return reverse('tag', args=[str(self.name)])
+        return reverse("tag", args=[str(self.name)])
 
     def __str__(self):
         return self.name
