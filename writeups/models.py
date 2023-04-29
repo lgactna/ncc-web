@@ -344,6 +344,12 @@ class Tag(models.Model):
         primary_key=True,
         max_length=20,
     )
+    short_desc = models.CharField(
+        verbose_name="Short description",
+        help_text="A short description of the tag. Also used in meta tags.",
+        max_length = 100,
+    )
+
     content = tinymce_models.HTMLField(
         verbose_name="Page content",
         help_text="A TinyMCE-driven field for the tag's page content.",
@@ -373,3 +379,46 @@ class Tag(models.Model):
 
     def __str__(self):
         return self.name
+
+
+class HomepageHero(models.Model):
+    """
+    Represents one of the heroes on the homepage.
+    """
+    headline = models.CharField(
+        verbose_name="Headline",
+        help_text="The title of the hero to display.",
+        max_length = 50
+    )
+
+    flavor_text = models.CharField(
+        verbose_name="Flavor text",
+        help_text="The flavor text to display below the main headline.",
+        max_length = 100,
+    )
+
+    is_active = models.BooleanField(
+        verbose_name="Show?",
+        help_text="Whether or not this hero should be shown in the homepage carousel."
+    )
+
+    primary_button_url = models.URLField(
+        verbose_name="Primary button URL",
+        help_text="Where to link the primary button to. Make sure you define primary button text, too!",
+        blank=True,
+        null=True,
+    )
+
+    primary_button_text = models.CharField(
+        verbose_name="Primary button text",
+        help_text="Button text for the primary button.",
+        max_length=25,
+        blank=True,
+        null=True,
+    )
+
+    background_image = models.ImageField(upload_to="home-hero", blank=True, null=True)
+
+
+    def __str__(self):
+        return f"{self.headline}"

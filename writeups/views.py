@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from .models import Post, Member, Competition, Placement, Tool, Tag
+from .models import Post, Member, Competition, Placement, Tool, Tag, HomepageHero
 from django.views import generic
 from django.views.decorators.csrf import csrf_exempt
 from django.http import Http404
@@ -8,10 +8,16 @@ from django.http import Http404
 def index(request):
     """View function for home page of site."""
 
+    # Get active heroes
+    heroes = HomepageHero.objects.filter(is_active=True)
+
     # Get 6 most recent posts by date
     recent_posts = Post.objects.order_by("-post_time")[:6]
 
-    context = {"recent_posts": recent_posts}
+    context = {
+        "heroes": heroes,
+        "recent_posts": recent_posts,
+    }
 
     # Render the HTML template index.html with the data in the context variable
     return render(request, "index.html", context=context)

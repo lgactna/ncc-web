@@ -4,39 +4,56 @@
 <!-- Start: Hero Carousel -->
 <div class="carousel slide" data-bs-ride="carousel" id="carousel-1" style="height: 600px;">
     <div class="carousel-inner h-100">
-        <div class="carousel-item active h-100"><img class="w-100 d-block position-absolute h-100 fit-cover" src="https://cdn.bootstrapstudio.io/placeholders/1400x800.png" alt="Slide Image" style="z-index: -1;"><!-- Start: 1 Row 1 Column -->
-            <div class="container d-flex flex-column justify-content-center h-100">
-                <div class="row">
-                    <div class="col-md-6 col-xl-4 offset-md-2">
-                        <div style="max-width: 350px;">
-                            <h2 class="text-uppercase fw-bold">NCL Registrations now open</h2>
-                            <p class="my-3">Complete the form below to have your NCL fee waived.</p><a class="btn btn-primary btn-lg me-2" role="button" href="#">NCL Waiver Form</a><a class="btn btn-outline-primary btn-lg" role="button" href="#">More info</a>
+        {% if heroes %}
+            {% for hero in heroes %}
+            <div class="carousel-item active h-100"><img class="w-100 d-block position-absolute h-100 fit-cover" src="{{hero.background_image.url}}" alt="Slide Image" style="z-index: -1;"><!-- Start: 1 Row 1 Column -->
+                <div class="container d-flex flex-column justify-content-center h-100">
+                    <div class="row">
+                        <div class="col-md-6 col-xl-4 offset-md-2" style="background: rgba(0,0,0,0.6);color: white;padding: 25px;">
+                            <div style="max-width: 350px;">
+                                <h2 class="text-uppercase fw-bold">{{ hero.headline }}</h2>
+                                <p class="my-3">{{ hero.flavor_text }}</p>
+                                {%if hero.primary_button_url %}
+                                    <a class="btn btn-primary btn-lg me-2" role="button" href="{{hero.primary_button_url}}">{{ hero.primary_button_text }}</a>
+                                {%endif%}
+                            </div>
                         </div>
                     </div>
-                </div>
-            </div><!-- End: 1 Row 1 Column -->
-        </div>
-        <div class="carousel-item h-100"><img class="w-100 d-block position-absolute h-100 fit-cover" src="https://cdn.bootstrapstudio.io/placeholders/1400x800.png" alt="Slide Image" style="z-index: -1;"><!-- Start: 1 Row 1 Column -->
-            <div class="container d-flex flex-column justify-content-center h-100">
-                <div class="row">
-                    <div class="col-md-6 col-xl-4 offset-md-2">
-                        <div style="max-width: 350px;">
-                            <h1 class="text-uppercase fw-bold">The wolfhack takes 7th in cyberseed 2022</h1>
-                            <p class="my-3">Tincidunt laoreet leo, adipiscing taciti tempor. Primis senectus sapien, risus donec ad fusce augue interdum.</p><a class="btn btn-primary btn-lg me-2" role="button" href="#">View Results</a><a class="btn btn-outline-primary btn-lg" role="button" href="#">Writeups</a>
+                </div><!-- End: 1 Row 1 Column -->
+            </div>
+            {% endfor %}
+        {% else %}
+            <div class="carousel-item active h-100"><img class="w-100 d-block position-absolute h-100 fit-cover" src="https://www.nevadacyberclub.com/images/NCC-1701.jpg" alt="Slide Image" style="z-index: -1;"><!-- Start: 1 Row 1 Column -->
+                <div class="container d-flex flex-column justify-content-center h-100">
+                    <div class="row">
+                        <div class="col-md-6 col-xl-4 offset-md-2" style="background: rgba(0,0,0,0.6);color: white;padding: 25px;">
+                            <div style="max-width: 350px;">
+                                <h2 class="text-uppercase fw-bold">Welcome to the Nevada Cyber Club</h2>
+                                <p class="my-3">Enjoy your stay!</p>
+                            </div>
                         </div>
                     </div>
-                </div>
-            </div><!-- End: 1 Row 1 Column -->
+                </div><!-- End: 1 Row 1 Column -->
+            </div>
+            <!--Default hero-->
+        {% endif %}
+
+    </div>
+    {% if heroes%}
+        <div>
+            <!-- Start: Previous --><a class="carousel-control-prev" href="#carousel-1" role="button" data-bs-slide="prev"><span class="carousel-control-prev-icon"></span><span class="visually-hidden">Previous</span></a><!-- End: Previous -->
+            <!-- Start: Next --><a class="carousel-control-next" href="#carousel-1" role="button" data-bs-slide="next"><span class="carousel-control-next-icon"></span><span class="visually-hidden">Next</span></a><!-- End: Next -->
         </div>
-    </div>
-    <div>
-        <!-- Start: Previous --><a class="carousel-control-prev" href="#carousel-1" role="button" data-bs-slide="prev"><span class="carousel-control-prev-icon"></span><span class="visually-hidden">Previous</span></a><!-- End: Previous -->
-        <!-- Start: Next --><a class="carousel-control-next" href="#carousel-1" role="button" data-bs-slide="next"><span class="carousel-control-next-icon"></span><span class="visually-hidden">Next</span></a><!-- End: Next -->
-    </div>
-    <ol class="carousel-indicators">
-        <li data-bs-target="#carousel-1" data-bs-slide-to="0" class="active"></li>
-        <li data-bs-target="#carousel-1" data-bs-slide-to="1"></li>
-    </ol>
+        <ol class="carousel-indicators">
+            {% for hero in heroes %}
+                {%if loop.index == 0%}
+                    <li data-bs-target="#carousel-1" data-bs-slide-to="{{loop.index}}" class="active"></li>
+                {%else%}
+                    <li data-bs-target="#carousel-1" data-bs-slide-to="{{loop.index}}"></li>
+                {%endif%}
+            {%endfor%}
+        </ol>
+    {%endif%}
 </div><!-- End: Hero Carousel -->
 <!-- Start: Features Centered Icons -->
 <div class="container-fluid py-4 py-xl-5 container-dark">
