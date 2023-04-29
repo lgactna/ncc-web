@@ -25,8 +25,7 @@ class Post(models.Model):
         primary_key=True,
     )
     post_time = models.DateTimeField(
-        verbose_name="Post time",
-        help_text="Date of initial posting.",
+        verbose_name="Post time", help_text="Date of initial posting."
     )
     update_time = models.DateTimeField(
         verbose_name="Update time",
@@ -37,18 +36,20 @@ class Post(models.Model):
 
     meta_lead = models.CharField(
         verbose_name="Meta lead text",
-        help_text="The lead text shown in writeup previews and on social media (via the meta-description). Max of 150 characters.",
+        help_text=(
+            "The lead text shown in writeup previews and on social media (via the"
+            " meta-description). Max of 150 characters."
+        ),
         max_length=150,
     )
-    meta_image = models.ImageField(
-        upload_to="post-banners",
-        blank=True,
-        null=True,
-    )
+    meta_image = models.ImageField(upload_to="post-banners", blank=True, null=True)
 
     title = models.CharField(
         verbose_name="Post title",
-        help_text="The post title; also used as the meta-title and the page title (with '| Nevada Cyber Club appended'). Max of 55 characters.",
+        help_text=(
+            "The post title; also used as the meta-title and the page title (with '|"
+            " Nevada Cyber Club appended'). Max of 55 characters."
+        ),
         max_length=55,
     )
 
@@ -75,15 +76,9 @@ class Post(models.Model):
         related_name="posts",
     )
     tags = models.ManyToManyField(
-        "Tag",
-        related_name="posts",  # use tags.posts.all(), for example
-        blank=True,
+        "Tag", related_name="posts", blank=True  # use tags.posts.all(), for example
     )
-    tools = models.ManyToManyField(
-        "Tool",
-        related_name="posts",
-        blank=True,
-    )
+    tools = models.ManyToManyField("Tool", related_name="posts", blank=True)
 
     def get_absolute_url(self):
         """
@@ -106,23 +101,19 @@ class Post(models.Model):
 class Member(models.Model):
     # https://docs.djangoproject.com/en/dev/topics/auth/customizing/#extending-the-existing-user-model
     # The username, first_name, last_name, and groups fields are accessible through the .user attribute.
-    user = models.OneToOneField(
-        User,
-        on_delete=models.CASCADE,
-    )
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
 
     display_name = models.SlugField(
         verbose_name="Display name",
-        help_text="Display name used in your URL and in post authoring (if necessary). 35 characters max.",
+        help_text=(
+            "Display name used in your URL and in post authoring (if necessary). 35"
+            " characters max."
+        ),
         max_length=35,
         unique=True,
         primary_key=True,
     )
-    profile_image = models.ImageField(
-        upload_to="profiles",
-        blank=True,
-        null=True,
-    )
+    profile_image = models.ImageField(upload_to="profiles", blank=True, null=True)
 
     title = models.CharField(
         verbose_name="Title",
@@ -134,7 +125,9 @@ class Member(models.Model):
 
     use_display_name_in_posts = models.BooleanField(
         verbose_name="Use display name in posts",
-        help_text="Whether to use the display name or your full name as the post author.",
+        help_text=(
+            "Whether to use the display name or your full name as the post author."
+        ),
     )
 
     content = tinymce_models.HTMLField(
@@ -146,7 +139,10 @@ class Member(models.Model):
 
     meta_lead = models.CharField(
         verbose_name="Meta lead text",
-        help_text="The lead text shown on social media (via the meta-description). Max of 150 characters.",
+        help_text=(
+            "The lead text shown on social media (via the meta-description). Max of 150"
+            " characters."
+        ),
         max_length=150,
     )
 
@@ -198,10 +194,7 @@ class Competition(models.Model):
         null=True,
     )
 
-    COMPETITION_TYPE = (
-        ("i", "Individual"),
-        ("t", "Team"),
-    )
+    COMPETITION_TYPE = (("i", "Individual"), ("t", "Team"))
 
     type = models.CharField(
         help_text="Competition type (individual/team/etc.)",
@@ -212,18 +205,12 @@ class Competition(models.Model):
     )
 
     format = models.CharField(
-        help_text="Competition format (CTF/RvB/etc.)",
-        default="CTF",
-        max_length=20,
+        help_text="Competition format (CTF/RvB/etc.)", default="CTF", max_length=20
     )
 
-    registration_link = models.URLField(
-        help_text="Registration link.",
-        default="",
-    )
+    registration_link = models.URLField(help_text="Registration link.", default="")
     competition_link = models.URLField(
-        help_text="Link to competition website.",
-        default="",
+        help_text="Link to competition website.", default=""
     )
 
     hex_validation = RegexValidator(
@@ -234,13 +221,19 @@ class Competition(models.Model):
     )
     theme_color = models.CharField(
         max_length=6,
-        help_text="The background color used for this competition. Enter as 6 hex characters. Please make sure there's sufficient contrast!",
+        help_text=(
+            "The background color used for this competition. Enter as 6 hex characters."
+            " Please make sure there's sufficient contrast!"
+        ),
         validators=[hex_validation, length_validation],
         default="002E62",  # Navy blue used throughout the website
     )
     meta_lead = models.CharField(
         verbose_name="Meta lead text",
-        help_text="The lead text shown in writeup previews and on social media (via the meta-description). Max of 150 characters.",
+        help_text=(
+            "The lead text shown in writeup previews and on social media (via the"
+            " meta-description). Max of 150 characters."
+        ),
         max_length=150,
     )
     content = tinymce_models.HTMLField(
@@ -278,13 +271,19 @@ class Placement(models.Model):
     positive_validation = MinValueValidator(1, message="Placement must be positive!")
     rank = models.IntegerField(
         verbose_name="Placement",
-        help_text="This member/team's numerical placement. Can be blank if the competition hasn't happened yet.",
+        help_text=(
+            "This member/team's numerical placement. Can be blank if the competition"
+            " hasn't happened yet."
+        ),
         blank=True,
         validators=[positive_validation],
     )
     team_name = models.CharField(
         verbose_name="Team name",
-        help_text="This team's name. It only serves a vanity purpose and has no functional relationships.",
+        help_text=(
+            "This team's name. It only serves a vanity purpose and has no functional"
+            " relationships."
+        ),
         max_length=35,
         null=True,
         blank=True,
@@ -294,7 +293,10 @@ class Placement(models.Model):
         """
         String representing placement.
         """
-        return f"{self.member.user.get_full_name()} - rank {self.rank} in {self.competition}"
+        return (
+            f"{self.member.user.get_full_name()} - rank {self.rank} in"
+            f" {self.competition}"
+        )
 
 
 class Tool(models.Model):
@@ -308,23 +310,21 @@ class Tool(models.Model):
         help_text="Name of the tool. 50 chars max.",
         max_length=50,
     )
-    image = models.ImageField(
-        upload_to="tool-images",
-        blank=True,
-        null=True,
-    )
+    image = models.ImageField(upload_to="tool-images", blank=True, null=True)
     content = tinymce_models.HTMLField(
         verbose_name="Page content",
         help_text="A TinyMCE-driven field for the tool's page content.",
     )
     meta_lead = models.CharField(
         verbose_name="Meta lead text",
-        help_text="The lead text shown in writeup previews and on social media (via the meta-description). Max of 150 characters.",
+        help_text=(
+            "The lead text shown in writeup previews and on social media (via the"
+            " meta-description). Max of 150 characters."
+        ),
         max_length=150,
     )
     tags = models.ManyToManyField(
-        "Tag",
-        related_name="tools",  # use tool.tags.all(), for example
+        "Tag", related_name="tools"  # use tool.tags.all(), for example
     )
 
     def get_absolute_url(self):
@@ -357,7 +357,10 @@ class Tag(models.Model):
     )
     theme_color = models.CharField(
         max_length=6,
-        help_text="The background color used for this competition. Enter as 6 hex characters. Please make sure there's sufficient contrast!",
+        help_text=(
+            "The background color used for this competition. Enter as 6 hex characters."
+            " Please make sure there's sufficient contrast!"
+        ),
         validators=[hex_validation, length_validation],
         default="002E62",  # Navy blue used throughout the website
     )

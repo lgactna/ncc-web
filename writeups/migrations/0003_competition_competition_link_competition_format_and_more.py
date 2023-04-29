@@ -4,7 +4,6 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
         ("writeups", "0002_member_profile_image_post_meta_image_tag_content_and_more")
     ]

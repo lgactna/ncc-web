@@ -8,7 +8,6 @@ import tinymce.models
 
 
 class Migration(migrations.Migration):
-
     initial = True
 
     dependencies = [migrations.swappable_dependency(settings.AUTH_USER_MODEL)]
@@ -20,7 +19,10 @@ class Migration(migrations.Migration):
                 (
                     "vanity_url",
                     models.SlugField(
-                        help_text="The vanity URL (competition/...). Use dashes to separate words.",
+                        help_text=(
+                            "The vanity URL (competition/...). Use dashes to separate"
+                            " words."
+                        ),
                         primary_key=True,
                         serialize=False,
                         verbose_name="Vanity URL",
@@ -29,7 +31,10 @@ class Migration(migrations.Migration):
                 (
                     "name",
                     models.CharField(
-                        help_text="The full name of the competition. 100 chars or less (enforced).",
+                        help_text=(
+                            "The full name of the competition. 100 chars or less"
+                            " (enforced)."
+                        ),
                         max_length=100,
                         verbose_name="Competition name",
                     ),
@@ -66,7 +71,11 @@ class Migration(migrations.Migration):
                     "theme_color",
                     models.CharField(
                         default="002E62",
-                        help_text="The background color used for this competition. Enter as 6 hex characters. Please make sure there's sufficient contrast!",
+                        help_text=(
+                            "The background color used for this competition. Enter as 6"
+                            " hex characters. Please make sure there's sufficient"
+                            " contrast!"
+                        ),
                         max_length=6,
                         validators=[
                             django.core.validators.RegexValidator(
@@ -81,7 +90,10 @@ class Migration(migrations.Migration):
                 (
                     "meta_lead",
                     models.CharField(
-                        help_text="The lead text shown in writeup previews and on social media (via the meta-description). Max of 150 characters.",
+                        help_text=(
+                            "The lead text shown in writeup previews and on social"
+                            " media (via the meta-description). Max of 150 characters."
+                        ),
                         max_length=150,
                         verbose_name="Meta lead text",
                     ),
@@ -89,7 +101,9 @@ class Migration(migrations.Migration):
                 (
                     "content",
                     tinymce.models.HTMLField(
-                        help_text="A TinyMCE-driven field for the post content/body copy.",
+                        help_text=(
+                            "A TinyMCE-driven field for the post content/body copy."
+                        ),
                         verbose_name="Page content",
                     ),
                 ),
@@ -101,7 +115,10 @@ class Migration(migrations.Migration):
                 (
                     "display_name",
                     models.SlugField(
-                        help_text="Display name used in your URL and in post authoring (if necessary). 35 characters max.",
+                        help_text=(
+                            "Display name used in your URL and in post authoring (if"
+                            " necessary). 35 characters max."
+                        ),
                         max_length=35,
                         primary_key=True,
                         serialize=False,
@@ -114,7 +131,9 @@ class Migration(migrations.Migration):
                     models.CharField(
                         blank=True,
                         default="",
-                        help_text="Special title (e.g. President, Vice President, etc.).",
+                        help_text=(
+                            "Special title (e.g. President, Vice President, etc.)."
+                        ),
                         max_length=35,
                         verbose_name="Title",
                     ),
@@ -122,7 +141,10 @@ class Migration(migrations.Migration):
                 (
                     "use_display_name_in_posts",
                     models.BooleanField(
-                        help_text="Whether to use the display name or your full name as the post author.",
+                        help_text=(
+                            "Whether to use the display name or your full name as the"
+                            " post author."
+                        ),
                         verbose_name="Use display name in posts",
                     ),
                 ),
@@ -138,7 +160,10 @@ class Migration(migrations.Migration):
                 (
                     "meta_lead",
                     models.CharField(
-                        help_text="The lead text shown on social media (via the meta-description). Max of 150 characters.",
+                        help_text=(
+                            "The lead text shown on social media (via the"
+                            " meta-description). Max of 150 characters."
+                        ),
                         max_length=150,
                         verbose_name="Meta lead text",
                     ),
@@ -179,7 +204,11 @@ class Migration(migrations.Migration):
                     "theme_color",
                     models.CharField(
                         default="002E62",
-                        help_text="The background color used for this competition. Enter as 6 hex characters. Please make sure there's sufficient contrast!",
+                        help_text=(
+                            "The background color used for this competition. Enter as 6"
+                            " hex characters. Please make sure there's sufficient"
+                            " contrast!"
+                        ),
                         max_length=6,
                         validators=[
                             django.core.validators.RegexValidator(
@@ -199,7 +228,9 @@ class Migration(migrations.Migration):
                 (
                     "vanity_url",
                     models.SlugField(
-                        help_text="The vanity URL (tool/...). Use dashes to separate words.",
+                        help_text=(
+                            "The vanity URL (tool/...). Use dashes to separate words."
+                        ),
                         primary_key=True,
                         serialize=False,
                         verbose_name="Vanity URL",
@@ -223,7 +254,10 @@ class Migration(migrations.Migration):
                 (
                     "meta_lead",
                     models.CharField(
-                        help_text="The lead text shown in writeup previews and on social media (via the meta-description). Max of 150 characters.",
+                        help_text=(
+                            "The lead text shown in writeup previews and on social"
+                            " media (via the meta-description). Max of 150 characters."
+                        ),
                         max_length=150,
                         verbose_name="Meta lead text",
                     ),
@@ -240,7 +274,10 @@ class Migration(migrations.Migration):
                 (
                     "vanity_url",
                     models.SlugField(
-                        help_text="The vanity URL (writeups/...). Use dashes to separate words.",
+                        help_text=(
+                            "The vanity URL (writeups/...). Use dashes to separate"
+                            " words."
+                        ),
                         primary_key=True,
                         serialize=False,
                         verbose_name="Vanity URL",
@@ -264,7 +301,10 @@ class Migration(migrations.Migration):
                 (
                     "meta_lead",
                     models.CharField(
-                        help_text="The lead text shown in writeup previews and on social media (via the meta-description). Max of 150 characters.",
+                        help_text=(
+                            "The lead text shown in writeup previews and on social"
+                            " media (via the meta-description). Max of 150 characters."
+                        ),
                         max_length=150,
                         verbose_name="Meta lead text",
                     ),
@@ -272,7 +312,11 @@ class Migration(migrations.Migration):
                 (
                     "title",
                     models.CharField(
-                        help_text="The post title; also used as the meta-title and the page title (with '| Nevada Cyber Club appended'). Max of 55 characters.",
+                        help_text=(
+                            "The post title; also used as the meta-title and the page"
+                            " title (with '| Nevada Cyber Club appended'). Max of 55"
+                            " characters."
+                        ),
                         max_length=55,
                         verbose_name="Post title",
                     ),
@@ -334,7 +378,10 @@ class Migration(migrations.Migration):
                     "rank",
                     models.IntegerField(
                         blank=True,
-                        help_text="This member/team's numerical placement. Can be blank if the competition hasn't happened yet.",
+                        help_text=(
+                            "This member/team's numerical placement. Can be blank if"
+                            " the competition hasn't happened yet."
+                        ),
                         validators=[
                             django.core.validators.MinValueValidator(
                                 1, message="Placement must be positive!"
@@ -347,7 +394,10 @@ class Migration(migrations.Migration):
                     "team_name",
                     models.CharField(
                         blank=True,
-                        help_text="This team's name. It only serves a vanity purpose and has no functional relationships.",
+                        help_text=(
+                            "This team's name. It only serves a vanity purpose and has"
+                            " no functional relationships."
+                        ),
                         max_length=35,
                         null=True,
                         verbose_name="Team name",

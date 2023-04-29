@@ -5,7 +5,6 @@ import tinymce.models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [("writeups", "0001_initial")]
 
     operations = [
