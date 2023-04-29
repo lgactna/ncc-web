@@ -65,7 +65,11 @@ class Post(models.Model):
     # Instead, replace it with some text like "(deleted user)" or
     # "(anonymous)".
     author = models.ForeignKey(
-        "Member", on_delete=models.SET_NULL, blank=True, null=True, related_name="posts"
+        "Member", 
+        on_delete=models.SET_NULL, 
+        blank=True, 
+        null=True, 
+        related_name="posts",
     )
     # Same with competitions.
     competition = models.ForeignKey(
@@ -74,6 +78,15 @@ class Post(models.Model):
         blank=True,
         null=True,
         related_name="posts",
+    )
+
+    core_tag = models.ForeignKey(
+        "Tag", 
+        verbose_name="Core tag",
+        help_text="The primary tag to display for this post. Used for vanity only.",
+        on_delete=models.SET_NULL,
+        blank=True,
+        null=True,
     )
     tags = models.ManyToManyField(
         "Tag", related_name="posts", blank=True  # use tags.posts.all(), for example
@@ -348,6 +361,13 @@ class Tag(models.Model):
         verbose_name="Short description",
         help_text="A short description of the tag. Also used in meta tags.",
         max_length = 100,
+    )
+    icon = models.ImageField(
+        verbose_name="Icon",
+        help_text="The icon to use for this tool.",
+        upload_to="tag-icons",
+        blank=True,
+        null=True,
     )
 
     content = tinymce_models.HTMLField(
