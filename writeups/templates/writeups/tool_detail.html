@@ -16,7 +16,7 @@
                     <h1>{{ tool.name }}</h1>
                     <div>
                         {% for tool_tag in tool.tags.all %}
-                        <span class="badge" style="background-color: #{{ tool_tag.theme_color }}; margin-right: 5px;">{{ tool_tag.name }}</span>
+                        <a href="{{ tool_tag.get_absolute_url }}"><span class="badge" style="background-color: #{{ tool_tag.theme_color }}; margin-right: 5px">{{ tool_tag.name }}</span></a>
                         {% endfor %}
                     </div>
                     <p class="mb-1">

@@ -60,7 +60,7 @@
                 </div><span style="font-size: 24px;"><strong>Tags</strong></span>
                 <div id="tags-container">
                     {% for tag in writeup.tags.all %}
-                        <a href="{{ tag.get_absolute_url }}"><span class="badge bg-primary" style="background-color: #{{ tag.theme_color }}; margin-right: 5px">{{ tag.name }}</span></a>
+                        <a href="{{ tag.get_absolute_url }}"><span class="badge" style="background-color: #{{ tag.theme_color }}; margin-right: 5px">{{ tag.name }}</span></a>
                     {% endfor %}
                 </div>
             </div>
