@@ -46,6 +46,13 @@ class Post(models.Model):
         max_length=150,
     )
     meta_image = models.ImageField(upload_to="post-banners", blank=True, null=True)
+    private = models.BooleanField(
+        verbose_name="Private?",
+        help_text=(
+            "If a post is set to private, users must be logged in to view the post."
+            " Linking to the post will also hide its meta details."
+        )
+    )
 
     title = models.CharField(
         verbose_name="Post title",

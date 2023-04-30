@@ -32,7 +32,7 @@
         </div>
     </section><!-- End: Banner Heading -->
     <div class="container">
-        <h1>About me</h1>
+        <h2>About me</h2>
         {% if not member.content %}
             <span><em>This user hasn't added any profile content!</em></span>
         {% else %}
@@ -40,7 +40,7 @@
         {% endif %}
     </div>
     <div class="container">
-        <h1>Competitions</h1>
+        <h2>Competitions</h2>
         {% if member.competitions.all %}
             {% for competition in member.competitions.all %}
                 <span>{{ competition }}</span>
@@ -50,27 +50,9 @@
         {% endif %}
     </div>
     <div class="container">
-        <h1>Recent posts</h1>
-        {% if member.posts.all %}
-            {% for post in member.posts.all %}
-            <div class="p-2" style="border-radius: 4px;border: 1px solid rgba(0,0,0,.125);margin-bottom: 10px;"><a href="{{post.get_absolute_url}}">
-                <h3>{{post.title}}</h3>
-                </a>
-                <div class="d-flex align-items-lg-center"><img class="rounded-circle flex-shrink-0 me-3 fit-cover" width="50" height="50" src="https://cdn.bootstrapstudio.io/placeholders/1400x800.png" style="width: 40px;height: 40px;">
-                    <div class="d-xl-flex align-items-xl-center"><span>by <strong>{{post.author}}</strong>- {{post.post_time}}</span></div>
-                </div>
-                <p>{{ post.meta_lead }}<br></p>
-                <div style="display: flex;">
-                    {% for tag in post.tags.all %}
-                        <a href="{{ tag.get_absolute_url }}"><span class="badge" style="background-color: #{{ tag.theme_color }}; margin-right: 5px">{{ tag.name }}</span></a>
-                    {% endfor %}
-                    <a href="{{post.get_absolute_url}}" style="margin-left: auto;font-weight: bold;">Continue reading</a>
-                </div>
-            </div>
-            {% endfor %}
-        {% else %}
-            <span><em>This user has not yet made any posts!</em></span>
-        {% endif %}
+        <h2>Recent posts</h2>
+        {% load post_listings %}
+        {% show_recent_posts user.is_authenticated %}
     </div>
 </div>
 

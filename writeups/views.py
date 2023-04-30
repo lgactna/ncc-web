@@ -2,8 +2,24 @@ from django.shortcuts import render
 from .models import Post, Member, Competition, Placement, Tool, Tag, HomepageHero
 from django.views import generic
 from django.views.decorators.csrf import csrf_exempt
-from django.http import Http404
+from django.http import Http404, HttpResponseRedirect
+from django.contrib.auth.mixins import AccessMixin
 
+class PostContextMixin():
+    """
+    Adds the context `posts`, a QuerySet of all posts associated
+    with the current object.
+
+    Should be used in detail views for which `posts` is a valid
+    related name for that model.
+    """
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        self.object = self.get_object()
+
+        context['posts'] = self.object.posts.all()
+        return context
 
 def index(request):
     """View function for home page of site."""
@@ -11,12 +27,11 @@ def index(request):
     # Get active heroes
     heroes = HomepageHero.objects.filter(is_active=True)
 
-    # Get 6 most recent posts by date
-    recent_posts = Post.objects.order_by("-post_time")[:6]
+    posts = Post.objects.all()
 
     context = {
         "heroes": heroes,
-        "recent_posts": recent_posts,
+        "posts": posts,
     }
 
     # Render the HTML template index.html with the data in the context variable
@@ -28,7 +43,7 @@ class CompetitionsListView(generic.ListView):
     context_object_name = "competitions"
 
 
-class CompetitionDetailView(generic.DetailView):
+class CompetitionDetailView(PostContextMixin, generic.DetailView):
     model = Competition
     context_object_name = "competition"
 
@@ -39,9 +54,18 @@ class WriteupsListView(generic.ListView):
     context_object_name = "posts"
 
 
-class WriteupDetailView(generic.DetailView):
+class WriteupDetailView(AccessMixin, generic.DetailView):
     model = Post
     context_object_name = "writeup"
+
+    # For private posts, require the user to login.
+    # The abstract AccessMixin is just used for self.handle_no_permission().
+    def get(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        if not request.user.is_authenticated and self.object.private:
+            return self.handle_no_permission()
+        context = self.get_context_data(object=self.object)
+        return self.render_to_response(context)
 
 
 @csrf_exempt
@@ -55,7 +79,7 @@ class ToolsListView(generic.ListView):
     context_object_name = "tools"
 
 
-class ToolDetailView(generic.DetailView):
+class ToolDetailView(PostContextMixin, generic.DetailView):
     model = Tool
     context_object_name = "tool"
 
@@ -67,14 +91,13 @@ class MembersListView(generic.ListView):
     context_object_name = "members"
 
 
-class MemberDetailView(generic.DetailView):
+class MemberDetailView(PostContextMixin, generic.DetailView):
     # Will be necessary to split things out into groups
     # in the future, but I think this is fine for now
     model = Member
     context_object_name = "member"
 
-
-class TagDetailView(generic.DetailView):
+class TagDetailView(PostContextMixin, generic.DetailView):
     # Will be necessary to split things out into groups
     # in the future, but I think this is fine for now
     model = Tag
