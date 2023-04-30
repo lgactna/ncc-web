@@ -418,6 +418,10 @@ class Tag(models.Model):
         validators=[hex_validation, length_validation],
         default="002E62",  # Navy blue used throughout the website
     )
+    display_as_main_category = models.BooleanField(
+        verbose_name="Display as main category?",
+        help_text="If checked, this will be listed as one of the main categories on the main writeups listing page. Vanity only."
+    )
 
     def get_absolute_url(self):
         """

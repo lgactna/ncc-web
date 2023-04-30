@@ -55,6 +55,16 @@ class WriteupsListView(generic.ListView):
     # TODO: standardize posts vs. writeups one day lol
     context_object_name = "posts"
 
+    # Add in "core" tags
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        core_tags = Tag.objects.filter(display_as_main_category=True)
+
+        context['core_tags'] = core_tags
+
+        return context
+
 
 class WriteupDetailView(AccessMixin, generic.DetailView):
     model = Post
