@@ -133,3 +133,8 @@ dmypy.json
 
 # Don't commit static files
 static/
+
+# Special
+credentials.json
+token.json
+test.py
