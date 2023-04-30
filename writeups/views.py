@@ -5,6 +5,8 @@ from django.views.decorators.csrf import csrf_exempt
 from django.http import Http404, HttpResponseRedirect
 from django.contrib.auth.mixins import AccessMixin
 
+from django.contrib.auth.models import Group
+
 class PostContextMixin():
     """
     Adds the context `posts`, a QuerySet of all posts associated
@@ -90,6 +92,17 @@ class MembersListView(generic.ListView):
     model = Member
     context_object_name = "members"
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        # Special filtering against the hardcoded Executive group
+        exec_group = Group.objects.filter(name="Executive")
+        all_other_groups = Group.objects.exclude(name="Executive")
+
+        context['exec_group'] = exec_group
+        context['all_other_groups'] = all_other_groups
+
+        return context
 
 class MemberDetailView(PostContextMixin, generic.DetailView):
     # Will be necessary to split things out into groups

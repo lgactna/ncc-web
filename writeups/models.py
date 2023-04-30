@@ -136,7 +136,7 @@ class Post(models.Model):
 class Member(models.Model):
     # https://docs.djangoproject.com/en/dev/topics/auth/customizing/#extending-the-existing-user-model
     # The username, first_name, last_name, and groups fields are accessible through the .user attribute.
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name="member")
 
     display_name = models.SlugField(
         verbose_name="Display name",
