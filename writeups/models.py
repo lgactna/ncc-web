@@ -243,9 +243,15 @@ class Competition(models.Model):
         help_text="Competition format (CTF/RvB/etc.)", default="CTF", max_length=20
     )
 
-    registration_link = models.URLField(help_text="Registration link.", default="")
+    registration_link = models.URLField(
+        help_text="Registration link.",
+        blank=True,
+        null=True,
+    )
     competition_link = models.URLField(
-        help_text="Link to competition website.", default=""
+        help_text="Link to competition website.", 
+        blank=True,
+        null=True,
     )
 
     hex_validation = RegexValidator(

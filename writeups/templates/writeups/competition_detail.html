@@ -36,8 +36,8 @@
     </section><!-- End: Banner Heading -->
     <div class="container">
         <h2>Details</h2>
-        {% if tag.content %}
-            {{ tag.content|safe }}
+        {% if competition.content %}
+            {{ competition.content|safe }}
         {% else %}
             <span><em>No details have been written about this competition yet!</em></span>
         {% endif %}
