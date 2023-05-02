@@ -6,6 +6,7 @@ from django.db import models
 from django.urls import reverse
 from django.contrib.auth.models import User
 from django.core.validators import RegexValidator, MinLengthValidator, MinValueValidator
+from django.contrib.humanize.templatetags.humanize import ordinal
 from tinymce import models as tinymce_models
 
 from secrets import token_hex
@@ -290,6 +291,18 @@ class Competition(models.Model):
         help_text="A TinyMCE-driven field for the post content/body copy.",
     )
 
+    def get_best_placement(self):
+        return self.placements.order_by('-rank')[0]
+
+    def get_best_ordinal(self) -> str:
+        return ordinal(self.get_best_placement().rank)
+
+    def get_best_performer_name(self):
+        if self.type == 'i':
+            return self.get_best_placement().member.user.get_full_name()
+        elif self.type == 't':
+            return self.get_best_placement().team_name
+
     def get_absolute_url(self):
         """
         Returns the url for this tag.
@@ -306,6 +319,8 @@ class Competition(models.Model):
 
 
 class Placement(models.Model):
+    # Note that a placement exists for each member.
+
     competition = models.ForeignKey(
         "Competition", on_delete=models.CASCADE, related_name="placements"
     )

@@ -1,10 +1,9 @@
 from django.db.models import FileField
-from django.forms import forms
+from django.forms import forms 
 from django.template.defaultfilters import filesizeformat
 from django.utils.translation import ugettext_lazy as _
 
 # From https://stackoverflow.com/questions/2472422/django-file-upload-size-limit
-
 class SizeRestrictedFileField(FileField):
     """
     Same as FileField, but you can specify:
