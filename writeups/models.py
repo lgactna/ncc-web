@@ -8,6 +8,9 @@ from django.contrib.auth.models import User
 from django.core.validators import RegexValidator, MinLengthValidator, MinValueValidator
 from tinymce import models as tinymce_models
 
+from secrets import token_hex
+from pathlib import Path
+
 from .formatChecker import SizeRestrictedFileField
 
 class Post(models.Model):
@@ -71,7 +74,12 @@ class Post(models.Model):
     )
 
     def make_challenge_filepath(self, filename):
-        return f"challenge_files/{self.vanity_url}/{filename}"
+        # Get trailing extension of filename, if one exists
+        filename_as_path = Path(filename)
+        extension = filename_as_path.suffix
+
+        # hopefully this doesn't turn into somebody's crypto challenge to break lol
+        return f"challenge_files/{self.vanity_url}/{token_hex()}{extension}"
 
     challenge_files = SizeRestrictedFileField(
         verbose_name="Post files",
