@@ -1,12 +1,15 @@
 from django.shortcuts import render
 from django.views import generic
 from django.views.decorators.csrf import csrf_exempt
-from django.http import Http404, HttpResponseRedirect
+from django.http import Http404, HttpResponseRedirect, JsonResponse
 from django.contrib.auth.mixins import AccessMixin
 from django.contrib.auth.models import Group
+from django.conf import settings
+from django.core.files.storage import default_storage
 
 from .models import Post, Member, Competition, Placement, Tool, Tag, HomepageHero
 
+from uuid import uuid4
 import datetime
 
 class PostContextMixin():
@@ -40,6 +43,15 @@ def index(request):
 
     # Render the HTML template index.html with the data in the context variable
     return render(request, "index.html", context=context)
+
+
+def tinymce_upload(request):
+    file = request.FILES.get('file')
+    filename = f"tinymce/{uuid4()}/{str(file)}"
+    with default_storage.open(filename, "wb") as f:
+        f.write(file.read())
+
+    return JsonResponse({"location": f"{settings.MEDIA_URL}{filename}"})
 
 
 class CompetitionsListView(generic.ListView):

@@ -18,4 +18,5 @@ urlpatterns = [
     path("member/<slug:pk>", views.MemberDetailView.as_view(), name="member"),
     path("tag/<slug:pk>", views.TagDetailView.as_view(), name="tag"),
     path("events/", views.events, name="events"),
+    path("tinymce-upload/", views.tinymce_upload)
 ]

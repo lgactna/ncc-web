@@ -132,7 +132,7 @@ dmypy.json
 .idea/
 
 # Don't commit static files
-static/
+/static/
 
 # Special
 credentials.json

@@ -153,7 +153,8 @@ DATA_UPLOAD_MAX_MEMORY_SIZE = 5242880  # 5 MB
 TINYMCE_DEFAULT_CONFIG = {
     "height": 360,
     "width": 1120,
-    "images_upload_url": "images",
+    "images_upload_url": "/writeups/tinymce-upload/",
+    "images_upload_handler": "tinymce_image_upload_handler",
     "cleanup_on_startup": True,
     "custom_undo_redo_levels": 20,
     "selector": "textarea",
@@ -177,6 +178,18 @@ TINYMCE_DEFAULT_CONFIG = {
     "contextmenu": "formats | link image",
     "menubar": True,
     "statusbar": True,
+}
+
+# https://github.com/jazzband/django-tinymce/issues/356
+TINYMCE_EXTRA_MEDIA = {
+    'css': {
+        'all': [
+        ],
+    },
+    'js': [
+        "https://cdn.jsdelivr.net/npm/js-cookie@3.0.1/dist/js.cookie.min.js",
+        "js/tinymce-upload.js",
+    ], 
 }
 
 ## Live
