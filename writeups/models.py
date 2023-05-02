@@ -83,9 +83,9 @@ class Post(models.Model):
 
     challenge_files = SizeRestrictedFileField(
         verbose_name="Post files",
-        help_text="A compressed archive of this challenge's files. A 500MB limit is enforced.",
+        help_text="A compressed archive of this challenge's files. A 100MB limit is enforced.",
         upload_to=make_challenge_filepath,
-        max_upload_size=5242880,
+        max_upload_size=104857600,
         blank=True,
         null=True
     )
