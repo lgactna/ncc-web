@@ -1,9 +1,6 @@
 {% extends "base_generic.html" %}
 
 {% block head %}
-    <style>
-        img { max-width: 100%; height: auto; }
-    </style>
 {% endblock %}
 
 {% block content %}
@@ -77,7 +74,7 @@
                     {% endfor %}
                 </div>
             </div>
-            <div class="col">
+            <div class="col" style="img { max-width: 100%; height: auto; }">
                 {% if writeup.meta_image %}
                     <img id="image-lead" src="{{ writeup.meta_image.url }}" width="100%">
                 {% endif %}
