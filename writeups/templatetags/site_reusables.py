@@ -20,3 +20,11 @@ def show_recent_posts(context, is_authenticated):
     recent_posts = recent_posts.order_by("-post_time")[:5]
 
     return {'recent_posts': recent_posts}
+
+@register.inclusion_tag('competition_cards.html')
+def get_competition_cards(competitions):
+    """
+    Get the competition cards associated with a given QuerySet of competitions.
+    """
+
+    return {'competitions': competitions}

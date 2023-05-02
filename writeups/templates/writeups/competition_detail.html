@@ -48,7 +48,7 @@
     </div>
     <div class="container">
         <h2>Writeups</h2>
-        {% load post_listings %}
+        {% load site_reusables %}
         {% show_recent_posts user.is_authenticated %}
     </div>
 {% endblock %}

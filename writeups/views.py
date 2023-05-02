@@ -1,11 +1,13 @@
 from django.shortcuts import render
-from .models import Post, Member, Competition, Placement, Tool, Tag, HomepageHero
 from django.views import generic
 from django.views.decorators.csrf import csrf_exempt
 from django.http import Http404, HttpResponseRedirect
 from django.contrib.auth.mixins import AccessMixin
-
 from django.contrib.auth.models import Group
+
+from .models import Post, Member, Competition, Placement, Tool, Tag, HomepageHero
+
+import datetime
 
 class PostContextMixin():
     """
@@ -43,6 +45,21 @@ def index(request):
 class CompetitionsListView(generic.ListView):
     model = Competition
     context_object_name = "competitions"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        # Upcoming competitions are those that haven't started yet.
+        context['upcoming_competitions'] = Competition.objects.filter(start_date__gt=datetime.datetime.today()).order_by("-start_date")
+
+        # Ongoing competitions are those that have started but haven't
+        # had a placement punched in yet
+        context['ongoing_competitions'] = Competition.objects.filter(start_date__lte=datetime.datetime.today(), placements=None).order_by("-start_date")
+
+        # Completed competitions are those that have started and have a
+        # placement punched in.
+        context['completed_competitions'] = Competition.objects.filter(start_date__lte=datetime.datetime.today()).exclude(placements=None).order_by("-start_date")
+
+        return context
 
 
 class CompetitionDetailView(PostContextMixin, generic.DetailView):
