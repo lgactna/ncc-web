@@ -43,6 +43,11 @@
                         </div>
                     </div>
                 </div>
+                {% if writeup.private %}
+                <div class="alert alert-danger" role="alert" style="margin-top: 16px;">
+                    <span><strong>This post has been marked private!</strong>&nbsp;The contents of this post should not be distributed outside the club, usually because the associated competition forbids it from being distributed.</span>
+                </div>
+                {% endif %}
                 {%if writeup.challenge_files%}
                 <div class="d-flex justify-content-center" style="padding-top: 10px;padding-bottom: 10px;"><a class="btn btn-primary" role="button" href={{writeup.challenge_files.url}}><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-download" style="font-size: 1em;margin-right: 0.5em;width: 1em;height: 1em;">
                     <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z"></path>
