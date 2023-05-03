@@ -10,7 +10,7 @@
             {% else %}
             <img class="rounded-circle flex-shrink-0 me-3 fit-cover" width="50" height="50" src="https://cdn.bootstrapstudio.io/placeholders/1400x800.png" style="width: 40px;height: 40px;">
             {% endif %}
-            <div class="d-xl-flex align-items-xl-center"><span>by <strong>{{post.author}}</strong>- {{post.post_time}}</span></div>
+            <div class="d-xl-flex align-items-xl-center"><span>by <strong><a href="{{post.author.get_absolute_url}}">{{post.author}}</a></strong> - {{post.post_time}}</span></div>
         </div>
         <p>{{ post.meta_lead }}<br></p>
         <div style="display: flex;">

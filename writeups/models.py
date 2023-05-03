@@ -292,7 +292,7 @@ class Competition(models.Model):
     )
 
     def get_best_placement(self):
-        return self.placements.order_by('-rank')[0]
+        return self.placements.order_by('rank')[0]
 
     def get_best_ordinal(self) -> str:
         return ordinal(self.get_best_placement().rank)

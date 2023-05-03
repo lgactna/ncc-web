@@ -13,7 +13,7 @@
                 {% for post in all_posts %}
                 <tr>
                     <td data-bs-toggle="tooltip" data-bss-tooltip="" data-bs-placement="right" title="{{ post.meta_lead }}"><a href="{{ post.get_absolute_url }}">{{ post.title }}</a></td>
-                    <td>{{ post.author }}</td>
+                    <td><a href="{{post.author.get_absolute_url}}">{{post.author}}</a></td>
                     <td>{{ post.post_time }}</td>
                     <td>
                         {% for tag in post.tags.all %}
