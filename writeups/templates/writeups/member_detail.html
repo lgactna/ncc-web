@@ -1,5 +1,9 @@
 {% extends "base_generic.html" %}
 
+{% block head %}
+<link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css">
+{% endblock %}
+
 {% block content %}
 <!-- Start: Banner Heading -->
     <section class="py-4 py-xl-5">
@@ -50,11 +54,19 @@
         {% endif %}
     </div>
     <div class="container">
-        <h2>Recent posts</h2>
+        <h2>Recent writeups</h2>
         {% load site_reusables %}
         {% show_recent_posts user.is_authenticated %}
     </div>
+    <div class="container">
+        <h2>All writeups</h2>
+        {% load site_reusables %}
+        {% show_all_posts user.is_authenticated %}
+    </div>
 </div>
+{% endblock %}
 
-
+{% block scripts %}
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
 {% endblock %}
