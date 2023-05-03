@@ -1,5 +1,9 @@
 {% extends "base_generic.html" %}
 
+{% block head %}
+<link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css">
+{% endblock %}
+
 {% block content %}
 <div class="container py-2">
     <h1 class="text-center">Writeups</h1>
@@ -31,22 +35,19 @@
         {% endfor %}
     </div>
 </div>
-<!-- End: Features Small Icons Color -->
-<!-- Start: Articles Cards -->
-<!-- Needs datatables
-<div class="container py-4 py-xl-5">
-    <div class="row">
-        <div class="col-md-8 col-xl-6 text-center mx-auto">
-            <h2>Full Listing</h2>
-            <p class="w-lg-50">This table contains a full list of all writeups, sorted by competition, category, and subcategory if applicable.</p>
-        </div>
-    </div>
-    <span>Dynamic datatables here</span>
-    {% for post in posts %}
-        <span> {{ post.title }}</span>
-    {% endfor %}
-
+<div class="container">
+    <h2>Recent writeups</h2>
+    {% load site_reusables %}
+    {% show_recent_posts user.is_authenticated %}
 </div>
--->
-<!-- End: Articles Cards -->
+<div class="container">
+    <h2>All writeups</h2>
+    {% load site_reusables %}
+    {% show_all_posts user.is_authenticated %}
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
 {% endblock %}
