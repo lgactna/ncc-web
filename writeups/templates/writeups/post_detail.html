@@ -15,9 +15,9 @@
                 <div>
                     <div class="card"><img class="card-img-top w-100 d-block fit-cover" style="height: 150px;/*background-color: #002e62;*/visibility: hidden;" src="https://cdn.bootstrapstudio.io/placeholders/1400x800.png">
                         {%if writeup.core_tag %}
-                        <div class="card-body" style="margin-top: -150px;color: white;background: #{{writeup.core_tag.theme_color}};">
+                            <div class="card-body" style="margin-top: -150px;color: white;background: #{{writeup.core_tag.theme_color}};">
                         {% else %}
-                        <div class="card-body" style="padding:0; margin-top: -150px;color: white;background: #002E62">
+                            <div class="card-body" style="padding:0; margin-top: -150px;color: white;background: #002E62">
                         {%endif%}
                             <div class="d-flex align-items-center">
                                 {% if writeup.core_tag %}
@@ -56,15 +56,15 @@
                 <div id="tools-container">
                     <div class="row">
                         {% for tool in writeup.tools.all %}
-                        <a href="{{ tool.get_absolute_url }}">
-                            <div class="col-3 d-flex justify-content-center align-items-center" data-bs-toggle="tooltip" data-bss-tooltip="" title="{{ tool.name }}">
+                            <div class="col-3 d-flex justify-content-center align-items-center">
+                                <a href="{{ tool.get_absolute_url }}" style="height: 50px;width: 50px;" data-bs-toggle="tooltip" data-bss-tooltip="" title="{{ tool.name }}">
                                 {% if tool.image %}
                                     <img width="50" height="50" src="{{ tool.image.url }}">
                                 {% else %}
                                     <img class="fit-cover" width="50" height="50" src="https://cdn.bootstrapstudio.io/placeholders/1400x800.png">
                                 {% endif %}
+                                </a>
                             </div>
-                        </a>
                         {% endfor %}
                     </div>
                 </div><span style="font-size: 24px;"><strong>Tags</strong></span>
@@ -74,9 +74,9 @@
                     {% endfor %}
                 </div>
             </div>
-            <div class="col" style="img { max-width: 100%; height: auto; }">
+            <div id="content-div" class="col">
                 {% if writeup.meta_image %}
-                    <img id="image-lead" src="{{ writeup.meta_image.url }}" width="100%">
+                    <img id="image-lead" src="{{ writeup.meta_image.url }}">
                 {% endif %}
                 <p id="paragraph-lead"><em>{{ writeup.meta_lead }}</em></p>
                 {{ writeup.content|safe }}
