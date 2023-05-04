@@ -445,6 +445,12 @@ class Tag(models.Model):
         verbose_name="Display as main category?",
         help_text="If checked, this will be listed as one of the main categories on the main writeups listing page. Vanity only."
     )
+    display_order = models.PositiveIntegerField(
+        verbose_name="Display order.",
+        help_text="The order to display tags in.",
+        blank=True,
+        null=True
+    )
 
     def get_absolute_url(self):
         """

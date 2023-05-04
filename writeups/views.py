@@ -88,7 +88,7 @@ class WriteupsListView(generic.ListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
 
-        core_tags = Tag.objects.filter(display_as_main_category=True)
+        core_tags = Tag.objects.filter(display_as_main_category=True).order_by('display_order')
 
         context['core_tags'] = core_tags
 
