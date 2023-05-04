@@ -11,7 +11,7 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-md-4 col-lg-4 order-md-2 order-lg-2">
+            <div class="col-md-4 order-sm-1 order-md-2">
                 <div>
                     <div class="card"><img class="card-img-top w-100 d-block fit-cover" style="height: 150px;/*background-color: #002e62;*/visibility: hidden;" src="https://cdn.bootstrapstudio.io/placeholders/1400x800.png">
                         {%if writeup.core_tag %}
@@ -74,7 +74,7 @@
                     {% endfor %}
                 </div>
             </div>
-            <div id="content-div" class="col">
+            <div class="col-md-8" id="content-div">
                 {% if writeup.meta_image %}
                     <img id="image-lead" src="{{ writeup.meta_image.url }}">
                 {% endif %}
