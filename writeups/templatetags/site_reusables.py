@@ -38,7 +38,7 @@ def show_all_posts(context, is_authenticated):
     else:
         all_posts = context['posts'].all()
     
-    all_posts = all_posts.order_by("-post_time")[:5]
+    all_posts = all_posts.order_by("-post_time")
 
     return {'all_posts': all_posts}
 
