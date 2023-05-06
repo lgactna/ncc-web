@@ -31,15 +31,12 @@ class PostContextMixin():
 def index(request):
     """View function for home page of site."""
 
-    # Get active heroes
-    heroes = HomepageHero.objects.filter(is_active=True)
-
-    posts = Post.objects.all()
-
-    context = {
-        "heroes": heroes,
-        "posts": posts,
-    }
+    context = {}
+    
+    context['heroes'] = HomepageHero.objects.filter(is_active=True)
+    context['posts'] = Post.objects.all()
+    context['upcoming_competitions'] = Competition.objects.filter(start_date__gt=datetime.datetime.today()).order_by("-start_date")
+    context['ongoing_competitions'] = Competition.objects.filter(start_date__lte=datetime.datetime.today(), placements=None).order_by("-start_date")
 
     # Render the HTML template index.html with the data in the context variable
     return render(request, "index.html", context=context)
@@ -77,6 +74,10 @@ class CompetitionsListView(generic.ListView):
 class CompetitionDetailView(PostContextMixin, generic.DetailView):
     model = Competition
     context_object_name = "competition"
+    # Should match the value after ':' from url
+    slug_url_kwarg = 'vanity_url'
+    # Should match the name of the slug field on the model 
+    slug_field = 'vanity_url'
 
 
 class WriteupsListView(generic.ListView):
@@ -99,6 +100,13 @@ class WriteupDetailView(AccessMixin, generic.DetailView):
     model = Post
     context_object_name = "writeup"
 
+    # Note that vanity_url is globally unique even though the URL structure
+    # might indicate otherwise.
+    # Should match the value after ':' from url
+    slug_url_kwarg = 'vanity_url'
+    # Should match the name of the slug field on the model 
+    slug_field = 'vanity_url'
+
     # For private posts, require the user to login.
     # The abstract AccessMixin is just used for self.handle_no_permission().
     def get(self, request, *args, **kwargs):
@@ -109,12 +117,6 @@ class WriteupDetailView(AccessMixin, generic.DetailView):
         return self.render_to_response(context)
 
 
-@csrf_exempt
-def writeup_images(request, pk: str = None):
-    print("test")
-    pass
-
-
 class ToolsListView(generic.ListView):
     model = Tool
     context_object_name = "tools"
@@ -123,6 +125,11 @@ class ToolsListView(generic.ListView):
 class ToolDetailView(PostContextMixin, generic.DetailView):
     model = Tool
     context_object_name = "tool"
+
+    # Should match the value after ':' from url
+    slug_url_kwarg = 'vanity_url'
+    # Should match the name of the slug field on the model 
+    slug_field = 'vanity_url'
 
 
 class MembersListView(generic.ListView):
@@ -149,11 +156,21 @@ class MemberDetailView(PostContextMixin, generic.DetailView):
     model = Member
     context_object_name = "member"
 
+    # Should match the value after ':' from url
+    slug_url_kwarg = 'vanity_url'
+    # Should match the name of the slug field on the model 
+    slug_field = 'vanity_url'
+
 class TagDetailView(PostContextMixin, generic.DetailView):
     # Will be necessary to split things out into groups
     # in the future, but I think this is fine for now
     model = Tag
     context_object_name = "tag"
+
+    # Should match the value after ':' from url
+    slug_url_kwarg = 'vanity_url'
+    # Should match the name of the slug field on the model 
+    slug_field = 'vanity_url'
 
 
 def events(request):

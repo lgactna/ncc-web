@@ -24,12 +24,10 @@ class Post(models.Model):
 
     # Slugs are letters, numbers, underscores, or hyphens (only).
     # By default, the length limit is 50.
-    # TODO: Eventually this should fall under writeups/competitions/..., because that
-    # just makes more sense in the vast majority of cases. 
     vanity_url = models.SlugField(
         verbose_name="Vanity URL",
         help_text="The vanity URL (writeups/...). Use dashes to separate words.",
-        primary_key=True,
+        unique=True,
     )
     post_time = models.DateTimeField(
         verbose_name="Post time", help_text="Date of initial posting."
@@ -72,6 +70,8 @@ class Post(models.Model):
     content = tinymce_models.HTMLField(
         verbose_name="Post content",
         help_text="A TinyMCE-driven field for the post content.",
+        blank=True,
+        null=True,
     )
 
     def make_challenge_filepath(self, filename):
@@ -102,12 +102,13 @@ class Post(models.Model):
         null=True, 
         related_name="posts",
     )
-    # Same with competitions.
+    
+    # Posts are tightly linked to a competition. I don't think it makes sense
+    # for a post to exist without a corresponding competition; anyways,
+    # you could always move "competition-less" posts to some placeholder competition.
     competition = models.ForeignKey(
         "Competition",
-        on_delete=models.SET_NULL,
-        blank=True,
-        null=True,
+        on_delete=models.CASCADE,
         related_name="posts",
     )
 
@@ -127,11 +128,8 @@ class Post(models.Model):
     def get_absolute_url(self):
         """
         Returns the url for this post.
-
-        If a vanity URL is used, this is the URL returned.
-        Else, returns the internal numeric ID.
         """
-        return reverse("writeup-detail", args=[str(self.vanity_url)])
+        return reverse("writeup-detail", args=[self.competition.vanity_url, self.vanity_url])
 
     def __str__(self):
         """
@@ -147,16 +145,21 @@ class Member(models.Model):
     # The username, first_name, last_name, and groups fields are accessible through the .user attribute.
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name="member")
 
-    display_name = models.SlugField(
+    display_name = models.CharField(
         verbose_name="Display name",
         help_text=(
             "Display name used in your URL and in post authoring (if necessary). 35"
             " characters max."
         ),
         max_length=35,
-        unique=True,
-        primary_key=True,
+        unique=True
     )
+    vanity_url = models.SlugField(
+        verbose_name="Vanity URL",
+        help_text="The vanity URL (member/...). Use dashes to separate words.",
+        unique=True,
+    )
+
     profile_image = models.ImageField(upload_to="profiles", blank=True, null=True)
 
     title = models.CharField(
@@ -202,7 +205,7 @@ class Member(models.Model):
         """
         Returns the url for this member.
         """
-        return reverse("member", args=[str(self.display_name)])
+        return reverse("member", args=[self.vanity_url])
 
     def __str__(self):
         if self.user.get_full_name():
@@ -212,13 +215,13 @@ class Member(models.Model):
 
 
 class Competition(models.Model):
-    # Order by start date, newest to oldest.
+    # Order by start date, newest to oldest, by default.
     ordering = ["-start_date"]
 
     vanity_url = models.SlugField(
         verbose_name="Vanity URL",
         help_text="The vanity URL (competition/...). Use dashes to separate words.",
-        primary_key=True,
+        unique=True,
     )
     name = models.CharField(
         verbose_name="Competition name",
@@ -232,7 +235,7 @@ class Competition(models.Model):
         null=True,
     )
     end_date = models.DateField(
-        verbose_name="Start date",
+        verbose_name="End date",
         help_text="End date of (actual) competition.",
         blank=True,
         null=True,
@@ -289,6 +292,8 @@ class Competition(models.Model):
     content = tinymce_models.HTMLField(
         verbose_name="Page content",
         help_text="A TinyMCE-driven field for the post content/body copy.",
+        blank=True,
+        null=True,
     )
 
     def get_best_placement(self):
@@ -307,7 +312,7 @@ class Competition(models.Model):
         """
         Returns the url for this tag.
         """
-        return reverse("competition", args=[str(self.vanity_url)])
+        return reverse("competition", args=[self.vanity_url])
 
     def __str__(self):
         """
@@ -367,7 +372,7 @@ class Tool(models.Model):
     vanity_url = models.SlugField(
         verbose_name="Vanity URL",
         help_text="The vanity URL (tool/...). Use dashes to separate words.",
-        primary_key=True,
+        unique=True,
     )
     name = models.CharField(
         verbose_name="Tool name",
@@ -378,6 +383,8 @@ class Tool(models.Model):
     content = tinymce_models.HTMLField(
         verbose_name="Page content",
         help_text="A TinyMCE-driven field for the tool's page content.",
+        blank=True,
+        null=True,
     )
     meta_lead = models.CharField(
         verbose_name="Meta lead text",
@@ -395,18 +402,22 @@ class Tool(models.Model):
         """
         Returns the url for this tag.
         """
-        return reverse("tool", args=[str(self.vanity_url)])
+        return reverse("tool", args=[self.vanity_url])
 
     def __str__(self):
         return self.name
 
 
 class Tag(models.Model):
-    name = models.SlugField(
+    vanity_url = models.SlugField(
+        verbose_name="Vanity URL",
+        help_text="The vanity URL used for this tag.",
+        unique=True,
+    )
+    name = models.CharField(
         verbose_name="Tag name",
-        help_text="The name used for this tag. 20 characters max.",
-        primary_key=True,
-        max_length=20,
+        help_text="Name of the tag. 50 chars max.",
+        max_length=50,
     )
     short_desc = models.CharField(
         verbose_name="Short description",
@@ -424,6 +435,8 @@ class Tag(models.Model):
     content = tinymce_models.HTMLField(
         verbose_name="Page content",
         help_text="A TinyMCE-driven field for the tag's page content.",
+        blank=True,
+        null=True,
     )
 
     hex_validation = RegexValidator(
@@ -456,7 +469,7 @@ class Tag(models.Model):
         """
         Returns the url for this tag.
         """
-        return reverse("tag", args=[str(self.name)])
+        return reverse("tag", args=[self.vanity_url])
 
     def __str__(self):
         return self.name

@@ -32,10 +32,10 @@
     </section><!-- End: Banner Heading -->
     <div class="container">
         <h2>Details</h2>
-        {% if not tool.content %}
-            <span><em>No description provided!</em></span>
-        {% else %}
+        {% if tool.content %}
             {{ tool.content|safe }}
+        {% else %}
+            <span><em>No description provided!</em></span>
         {% endif %}
     </div>
     <div class="container">

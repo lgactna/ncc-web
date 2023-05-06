@@ -37,10 +37,10 @@
     </section><!-- End: Banner Heading -->
     <div class="container">
         <h2>About me</h2>
-        {% if not member.content %}
-            <span><em>This user hasn't added any profile content!</em></span>
-        {% else %}
+        {% if member.content %}
             {{ member.content|safe }}
+        {% else %}
+            <span><em>This user hasn't added any profile content!</em></span>
         {% endif %}
     </div>
     <div class="container">

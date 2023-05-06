@@ -79,7 +79,13 @@
                     <img id="image-lead" src="{{ writeup.meta_image.url }}">
                 {% endif %}
                 <p id="paragraph-lead"><em>{{ writeup.meta_lead }}</em></p>
-                {{ writeup.content|safe }}
+                {% if writeup.content %}
+                    {{ writeup.content|safe }}
+                {% else %}
+                    <div class="alert alert-secondary" role="alert" style="margin-top: 16px;">
+                        <span><strong>This post has no content!</strong> This is most likely because the post's content is being built or becuase it's used for bookkeeping.</span>
+                    </div>
+                {% endif %}
             </div>
         </div>
 </div>
