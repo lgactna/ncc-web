@@ -1,7 +1,6 @@
 from django.db.models import FileField
 from django.forms import forms 
 from django.template.defaultfilters import filesizeformat
-from django.utils.translation import ugettext_lazy as _
 
 # From https://stackoverflow.com/questions/2472422/django-file-upload-size-limit
 class SizeRestrictedFileField(FileField):
@@ -29,7 +28,7 @@ class SizeRestrictedFileField(FileField):
         file = data.file
         try:
             if file._size > self.max_upload_size:
-                raise forms.ValidationError(_('Please keep filesize under %s. Current filesize %s') % (filesizeformat(self.max_upload_size), filesizeformat(file._size)))
+                raise forms.ValidationError(f"Please keep filesize under {filesizeformat(self.max_upload_size)}. Filesize was {filesizeformat(file._size)}.")
         except AttributeError:
             pass
 
