@@ -41,7 +41,7 @@ ALLOWED_HOSTS = [
 
 CSRF_TRUSTED_ORIGINS = [
     "https://ncc-web-writeups.azurewebsites.net",
-    "https://web-production-58a0.up.railway.app/",
+    "https://web-production-58a0.up.railway.app",
 ]
 
 # Application definition
